@@ -1,0 +1,25 @@
+we - WSL Explorer
+
+# Explorer
+Exit             :    ctrl-c or ESC
+Decide           :    alt-l or → or Enter
+Cursor Up        :    alt-k or ↑
+Cursor Down      :    alt-j or ↓
+Move Above       :    alt-h or ← or BackSpace
+Move Privious    :    alt-u
+Move Following   :    alt-r
+Toggle Hiddens   :    alt-a
+Show Hints       :    alt-/
+
+# File
+Yank             :    alt-y
+Paste            :    alt-p
+Delete           :    Delete
+Open with        :    alt-o
+Rename           :    alt-m
+New file or dir  :    alt-m
+
+# Apps
+Shell            :    alt-s
+Windows Explorer :    alt-e
+Mkdiri           :    alt-d
