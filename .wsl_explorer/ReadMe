@@ -1,22 +1,29 @@
-we - WSL Explorer
+we - WSL Explorer (v0.0.1-alpha)
+
+# General
+Decide           :    alt-l or → or Enter
+Show Hints       :    alt-/
+Exit             :    alt-c or ctrl-c or ESC
 
 # Explorer
-Exit             :    ctrl-c or ESC
-Decide           :    alt-l or → or Enter
+Toggle Hiddens   :    alt-a
+## Move
 Cursor Up        :    alt-k or ↑
 Cursor Down      :    alt-j or ↓
 Move Above       :    alt-h or ← or BackSpace
 Move Privious    :    alt-u
 Move Following   :    alt-r
-Toggle Hiddens   :    alt-a
-Show Hints       :    alt-/
+GoTo PATH        :    alt-g
+## Quick Access
+Quick Access(QA) :    alt-q
+Register QA      :    alt-f
 
 # File
 Yank             :    alt-y
 Paste            :    alt-p
 Delete           :    Delete
 Open with        :    alt-o
-Rename           :    alt-m
+Rename           :    alt-n
 New file or dir  :    alt-m
 
 # Apps
