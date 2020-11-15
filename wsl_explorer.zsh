@@ -2,7 +2,6 @@ alias we='_wsl_explorer'
 function _wsl_explorer() {
   # クイックアクセス　作成時か削除時かctrl-cするとホームに飛ぶ
   # クイックアクセス　リネーム欲しい
-  # クイックアクセス　ディレクトリ／ファイルの絞り込み
   setopt +o nomatch
   # ↓ここに実装する機能の名前を列挙する（forでステータス変数／ファイルが作成される）
   local _wsl_explorer_var_status_list=(endloop yank paste delete open undocd redocd shell hidden goup description hint rename mknew quickaccess register_quickaccess delete_quickaccess goto)
