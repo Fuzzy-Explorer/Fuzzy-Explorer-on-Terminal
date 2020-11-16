@@ -100,10 +100,6 @@ function _wsl_explorer() {
   lsi ././
 }
 
-function _wsl_explorer_func_preview() {
-  echo aaa
-}
-
 # ウィンドウズのディレクトリへのショートカット
 alias win='_wsl_explorer_func_windows_shortcut'
 function _wsl_explorer_func_windows_shortcut() {
