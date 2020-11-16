@@ -1,4 +1,4 @@
-we - WSL Explorer (v0.0.1-alpha)
+fe - Fuzzy Terminal Explorer (v0.0.1-alpha)
 
 # General
 Decide           :    alt-l or → or Enter
