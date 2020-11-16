@@ -193,7 +193,7 @@ function _fzt_explorer_func_rename() {
   if [ -n "$_fzt_explorer_var_check_not_include_slash" ]; then
     echo "Including '/' is not valid."
   else;
-    mv "$PWD/$_fzt_explorer_var_selected_path" "$PWD/$_fzt_explorer_var_newname"
+    mv -iT "$PWD/$_fzt_explorer_var_selected_path" "$PWD/$_fzt_explorer_var_newname"
   fi
 }
 
