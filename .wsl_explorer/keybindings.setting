@@ -27,3 +27,4 @@ alt-q:execute(echo 1 >| ~/.wsl_explorer/.status/.quickaccess.status)+abort
 alt-f:execute(echo 1 >| ~/.wsl_explorer/.status/.register_quickaccess.status)+accept
 alt-g:execute(echo 1 >| ~/.wsl_explorer/.status/.goto.status)+abort
 alt-i:toggle-preview
+alt-b:preview:echo {} | cut -f 2 -d ' ' | xargs -rI{a} sh -c 'if [ -f {a} ]; then ls -ldhG {a}; echo; richcat {a} -w 30; else ls -ldhG {a}; echo; lsi {a}; fi'
