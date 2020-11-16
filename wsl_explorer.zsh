@@ -35,6 +35,7 @@ function _wsl_explorer() {
     fi
     # fzfでのディレクトリの選択
     local _wsl_explorer_var_selected_path=$(echo $_wsl_explorer_var_dir_list | fzf --height 50% --preview-window right:40% --ansi +m --prompt="$PWD >" --bind "$_wsl_explorer_var_keybindings" --preview="echo {} | cut -f 2 -d ' ' | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then ls -ldhG {a}; batcat {a} --color=always --style=grid --line-range :100; else ls -ldhG {a}; echo; lsi {a}; fi'")
+    # local _wsl_explorer_var_selected_path=$(echo $_wsl_explorer_var_dir_list | fzf --height 50% --preview-window right:40% --ansi +m --prompt="$PWD >" --bind "$_wsl_explorer_var_keybindings" --preview="echo {} | cut -f 2 -d ' ' | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then ls -ldhG {a}; richcat {a} -w 30; else ls -ldhG {a}; echo; lsi {a}; fi'")
     _wsl_explorer_var_endloop=$(cat ~/.wsl_explorer/.status/.endloop.status)
     # 動作の分岐
     if [ $_wsl_explorer_var_endloop = '0' ]; then
