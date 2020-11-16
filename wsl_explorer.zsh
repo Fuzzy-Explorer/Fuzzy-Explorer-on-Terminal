@@ -190,6 +190,7 @@ function _wsl_explorer_func_rename() {
   echo '0' >| ~/.wsl_explorer/.status/.rename.status
   echo "please write new name of '$_wsl_explorer_var_selected_path'"
   local _wsl_explorer_var_newname=$_wsl_explorer_var_selected_path;
+  trap 'return' SIGINT
   vared _wsl_explorer_var_newname;
   local _wsl_explorer_var_check_not_include_slash=$(echo $_wsl_explorer_var_newname | grep '/')
   if [ -n "$_wsl_explorer_var_check_not_include_slash" ]; then
@@ -204,6 +205,7 @@ function _wsl_explorer_func_open() {
   echo '0' >| ~/.wsl_explorer/.status/.open.status
   echo 'please write command...'
   local _wsl_explorer_var_cmd='';
+  trap 'return' SIGINT
   vared _wsl_explorer_var_cmd;
   "$_wsl_explorer_var_cmd" $_wsl_explorer_var_selected_path
 }
@@ -247,6 +249,7 @@ function _wsl_explorer_func_shell() {
   echo '0' >| ~/.wsl_explorer/.status/.shell.status
   echo 'please write command...'
   local _wsl_explorer_var_cmd='';
+  trap 'return' SIGINT
   vared _wsl_explorer_var_cmd;
   _wsl_explorer_var_previous_dirs+=($PWD)
   _wsl_explorer_var_following_dirs=()
@@ -285,6 +288,7 @@ function _wsl_explorer_func_mknew() {
   echo '0' >| ~/.wsl_explorer/.status/.mknew.status
   echo "Make dir or file.\nPlease write new dir or file name. (If last char is /, make dir.)"
   local _wsl_explorer_var_new_mk_name=''
+  trap 'return' SIGINT
   vared _wsl_explorer_var_new_mk_name;
   _wsl_explorer_var_new_mk_name=$(echo $_wsl_explorer_var_new_mk_name | grep -v -E "^/")
   if [ -n "$_wsl_explorer_var_new_mk_name" ]; then
@@ -357,6 +361,7 @@ function _wsl_explorer_func_register_quickaccess() {
   echo '0' >| ~/.wsl_explorer/.status/.register_quickaccess.status
   echo 'Please write name of this quickaccess.'
   local name_of_qa=$_wsl_explorer_var_selected_path
+  trap 'return' SIGINT
   vared name_of_qa
   name_of_qa=$(echo $name_of_qa | sed 's/,/_/' | sed 's/\t/ /')
   local -A pathes 
@@ -399,6 +404,7 @@ function _wsl_explorer_func_goto() {
   echo '0' >| ~/.wsl_explorer/.status/.goto.status
   echo 'Please write Path or drag file/directory from Windows Explorer.'
   local _wsl_explorer_var_goto_path=''
+  trap 'return' SIGINT
   vared _wsl_explorer_var_goto_path
   _wsl_explorer_var_goto_wsl_path=$(eval "echo $_wsl_explorer_var_goto_path")
   if [ -d "$_wsl_explorer_var_goto_wsl_path" ]; then
