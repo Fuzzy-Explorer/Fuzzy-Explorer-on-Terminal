@@ -33,8 +33,9 @@ function _fzt_explorer() {
     else;
       local _fzt_explorer_var_dir_list="../\n`lsi -a`"
     fi
+    promp=$(echo $PWD | sed -e "s:$HOME:~:")
     # fzfでのディレクトリの選択
-    local _fzt_explorer_var_selected_path=$(echo $_fzt_explorer_var_dir_list | fzf --height 50% --preview-window right:40% --ansi +m --prompt="$PWD >" --bind "$_fzt_explorer_var_keybindings" --preview="echo {} | cut -f 2 -d ' ' | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then ls -ldhG {a}; batcat {a} --color=always --style=grid --line-range :100; else ls -ldhG {a}; echo; lsi {a}; fi'")
+    local _fzt_explorer_var_selected_path=$(echo $_fzt_explorer_var_dir_list | fzf --height 50% --preview-window right:40% --ansi +m --prompt="$promp >" --bind "$_fzt_explorer_var_keybindings" --preview="echo {} | cut -f 2 -d ' ' | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then ls -ldhG {a}; batcat {a} --color=always --style=grid --line-range :100; else ls -ldhG {a}; echo; lsi {a}; fi'")
     # local _fzt_explorer_var_selected_path=$(echo $_fzt_explorer_var_dir_list | fzf --height 50% --preview-window right:40% --ansi +m --prompt="$PWD >" --bind "$_fzt_explorer_var_keybindings" --preview="echo {} | cut -f 2 -d ' ' | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then ls -ldhG {a}; richcat {a} -w 30; else ls -ldhG {a}; echo; lsi {a}; fi'")
     _fzt_explorer_var_endloop=$(cat ~/.fzt_explorer/.status/.endloop.status)
     # 動作の分岐
