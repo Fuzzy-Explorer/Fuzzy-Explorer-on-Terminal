@@ -1,7 +1,5 @@
 alias fe='_fzt_explorer'
 function _fzt_explorer() {
-  # クイックアクセス　作成時か削除時かctrl-cするとホームに飛ぶ
-  # クイックアクセス　リネーム欲しい
   setopt +o nomatch
   # ↓ここに実装する機能の名前を列挙する（forでステータス変数／ファイルが作成される）
   local _fzt_explorer_var_status_list=(endloop yank paste delete open undocd redocd shell hidden goup description hint rename mknew quickaccess register_quickaccess delete_quickaccess goto)
