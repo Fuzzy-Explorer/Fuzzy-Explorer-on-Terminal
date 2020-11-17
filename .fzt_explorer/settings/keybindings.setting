@@ -1,0 +1,30 @@
+alt-e:execute-silent(explorer.exe .)
+ctrl-c:execute-silent(echo 1 >| ~/.fzt_explorer/.status/.endloop.status)+abort
+ESC:execute-silent(echo 1 >| ~/.fzt_explorer/.status/.endloop.status)+abort
+alt-c:execute-silent(echo 1 >| ~/.fzt_explorer/.status/.endloop.status)+abort
+alt-h:execute-silent(echo 1 >| ~/.fzt_explorer/.status/.goup.status)+abort
+alt-j:down
+alt-k:up
+alt-l:accept
+ctrl-j:preview-down
+ctrl-k:preview-up
+left:execute-silent(echo 1 >| ~/.fzt_explorer/.status/.goup.status)+abort
+right:accept
+backward-eof:execute-silent(echo 1 >| ~/.fzt_explorer/.status/.goup.status)+abort
+alt-y:execute-silent(echo 1 >| ~/.fzt_explorer/.status/.yank.status)+accept
+alt-p:execute-silent(echo 1 >| ~/.fzt_explorer/.status/.paste.status)+abort
+DEL:execute-silent(echo 1 >| ~/.fzt_explorer/.status/.delete.status)+accept
+alt-o:execute-silent(echo 1 >| ~/.fzt_explorer/.status/.open.status)+accept
+alt-u:execute-silent(echo 1 >| ~/.fzt_explorer/.status/.undocd.status)+abort
+alt-r:execute-silent(echo 1 >| ~/.fzt_explorer/.status/.redocd.status)+abort
+alt-s:execute-silent(echo 1 >| ~/.fzt_explorer/.status/.shell.status)+abort
+alt-a:execute(echo >> ~/.fzt_explorer/.status/.hidden.status)+abort
+alt-d:execute(echo 1 >| ~/.fzt_explorer/.status/.description.status)+accept
+alt-/:execute(echo 1 >| ~/.fzt_explorer/.status/.hint.status)+abort
+alt-n:execute(echo 1 >| ~/.fzt_explorer/.status/.rename.status)+accept
+alt-m:execute(echo 1 >| ~/.fzt_explorer/.status/.mknew.status)+abort
+alt-q:execute(echo 1 >| ~/.fzt_explorer/.status/.quickaccess.status)+abort
+alt-f:execute(echo 1 >| ~/.fzt_explorer/.status/.register_quickaccess.status)+accept
+alt-g:execute(echo 1 >| ~/.fzt_explorer/.status/.goto.status)+abort
+alt-i:toggle-preview
+alt-b:preview:echo {} | cut -f 2 -d ' ' | xargs -rI{a} sh -c 'if [ -f {a} ]; then ls -ldhG {a}; echo; richcat {a} -w 30; else ls -ldhG {a}; echo; lsi {a}; fi'
