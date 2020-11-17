@@ -55,7 +55,8 @@ function _fzt_explorer() {
     if [ -n "$_fzt_explorer_var_is_git_dir" ]; then
       local _fzt_explorer_var_git_diff=$(git status --short)
       if [ -n "$_fzt_explorer_var_git_diff" ]; then
-        _fzt_explorer_var_git_diff=$(echo '\033[1;31m'!'\033[0m')
+        echo $_fzt_explorer_var_git_diff
+        _fzt_explorer_var_git_diff=$(echo '\033[1;31m'!$(echo $_fzt_explorer_var_git_diff | wc -l)'\033[0m')
       else
         _fzt_explorer_var_git_diff=''
       fi
