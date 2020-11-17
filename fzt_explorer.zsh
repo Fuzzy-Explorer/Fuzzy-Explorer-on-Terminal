@@ -278,7 +278,8 @@ function _fzt_explorer_func_description() {
 # READMEを表示
 function _fzt_explorer_func_hint() {
   echo '0' >| ~/.fzt_explorer/.status/.hint.status
-  vim ~/.fzt_explorer/ReadMe -c ":set readonly"
+  richcat ~/.fzt_explorer/ReadMe.md -w 0.9 | fzf --ansi --bind "alt-j:down,alt-k:up"
+  # vim ~/.fzt_explorer/ReadMe.md -c ":set readonly"
 }
 
 # 新しくファイルかディレクトリを作る
