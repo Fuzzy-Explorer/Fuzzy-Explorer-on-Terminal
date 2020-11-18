@@ -36,26 +36,9 @@ function _fzt_explorer() {
     local _fzt_explorer_var_promp=$(echo $PWD | sed -e "s:$HOME:~:")
     local _fzt_explorer_var_is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
     local _fzt_explorer_var_git_current_branch=''
-
-    # RED = '\033[1;31m'
-    # GREEN = '\033[1;32m'
-    # YELLOW = '\033[33m'
-    # BLUE = '\033[1;34m'
-    # PURPLE = '\033[1;35m'
-    # CYAN = '\033[36m'
-    # WHITE = '\033[37m'
-    # END = '\033[0m'
-    # BOLD = '\033[1m'
-    # UNDERLINE = '\033[4m'
-    # INVISIBLE = '\033[08m'
-    # REVERCE = '\033[07m'
-    # BACK_LIGHT_YELLOW = '\033[230m'
-    # BACK_BLACK = '\033[40m'
-    # LIGHT_CYAN = '\033[1;36m'
     if [ -n "$_fzt_explorer_var_is_git_dir" ]; then
       local _fzt_explorer_var_git_diff=$(git status --short)
       if [ -n "$_fzt_explorer_var_git_diff" ]; then
-        echo $_fzt_explorer_var_git_diff
         _fzt_explorer_var_git_diff=$(echo '\033[1;31m'!$(echo $_fzt_explorer_var_git_diff | wc -l)'\033[0m')
       else
         _fzt_explorer_var_git_diff=''
