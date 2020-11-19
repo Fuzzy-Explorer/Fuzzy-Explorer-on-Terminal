@@ -37,9 +37,19 @@ function _fzt_explorer() {
     if [ -n "$_fzt_explorer_var_is_git_dir" ]; then
       local _fzt_explorer_var_git_diff=$(git status --short)
       if [ -n "$_fzt_explorer_var_git_diff" ]; then
-        _fzt_explorer_var_git_diff=$(echo '\033[1;31m'!$(echo $_fzt_explorer_var_git_diff | wc -l)'\033[0m')
-      else
+        local _fzt_explorer_var_git_diff_untrack=$(echo $_fzt_explorer_var_git_diff | grep "^??" | wc -l)
+        local _fzt_explorer_var_git_diff_Mod=$(echo $_fzt_explorer_var_git_diff | grep "^ M" | wc -l)
+        local _fzt_explorer_var_git_diff_Added=$(echo $_fzt_explorer_var_git_diff | grep "^M " | wc -l)
         _fzt_explorer_var_git_diff=''
+        if [ $_fzt_explorer_var_git_diff_Added -gt 0 ]; then
+          _fzt_explorer_var_git_diff=$_fzt_explorer_var_git_diff'\033[1;32m+'"$_fzt_explorer_var_git_diff_Added"'\033[0m'
+        fi
+        if [ $_fzt_explorer_var_git_diff_Mod -gt 0 ]; then
+          _fzt_explorer_var_git_diff=$_fzt_explorer_var_git_diff'\033[1;33m!'"$_fzt_explorer_var_git_diff_Mod"'\033[0m'
+        fi
+        if [ $_fzt_explorer_var_git_diff_untrack -gt 0 ]; then
+          _fzt_explorer_var_git_diff=$_fzt_explorer_var_git_diff'\033[1;31m?'"$_fzt_explorer_var_git_diff_untrack"'\033[0m'
+        fi
       fi
       _fzt_explorer_var_git_current_branch=$(echo $(git branch --contains=HEAD | sed 's/\*/\\uf1d3/') $_fzt_explorer_var_git_diff)
     fi
