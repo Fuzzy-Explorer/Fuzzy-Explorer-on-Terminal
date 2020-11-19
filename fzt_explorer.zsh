@@ -36,27 +36,26 @@ function _fzt_explorer() {
     local _fzt_explorer_var_git_current_branch=$(echo $(git branch --show-current))
     if [ -n "$_fzt_explorer_var_is_git_dir" ]; then
       local _fzt_explorer_var_git_diff=$(git status --short)
+      local _fzt_explorer_var_git_status=''
+      local _fzt_explorer_var_git_diff_committed=$(echo $(git log origin/$_fzt_explorer_var_git_current_branch...$_fzt_explorer_var_git_current_branch | grep "^commit" | wc -l))
+      if [ $_fzt_explorer_var_git_diff_committed -gt 0 ]; then
+        _fzt_explorer_var_git_status=$_fzt_explorer_var_git_status'\033[1;32m\uf148'"$_fzt_explorer_var_git_diff_committed"'\033[0m'
+      fi
       if [ -n "$_fzt_explorer_var_git_diff" ]; then
         local _fzt_explorer_var_git_diff_untrack=$(echo $_fzt_explorer_var_git_diff | grep "^??" | wc -l)
         local _fzt_explorer_var_git_diff_mod=$(echo $_fzt_explorer_var_git_diff | grep "^ M" | wc -l)
         local _fzt_explorer_var_git_diff_added=$(echo $_fzt_explorer_var_git_diff | grep "^M " | wc -l)
-        local _fzt_explorer_var_git_diff_committed=$(echo $(git log origin/$_fzt_explorer_var_git_current_branch...$_fzt_explorer_var_git_current_branch | grep "^commit" | wc -l))
-        echo $_fzt_explorer_var_git_diff_committed
-        _fzt_explorer_var_git_diff=''
         if [ $_fzt_explorer_var_git_diff_added -gt 0 ]; then
-          _fzt_explorer_var_git_diff=$_fzt_explorer_var_git_diff'\033[1;32m+'"$_fzt_explorer_var_git_diff_added"'\033[0m'
+          _fzt_explorer_var_git_status=$_fzt_explorer_var_git_status'\033[1;32m+'"$_fzt_explorer_var_git_diff_added"'\033[0m'
         fi
         if [ $_fzt_explorer_var_git_diff_mod -gt 0 ]; then
-          _fzt_explorer_var_git_diff=$_fzt_explorer_var_git_diff'\033[1;33m!'"$_fzt_explorer_var_git_diff_mod"'\033[0m'
+          _fzt_explorer_var_git_status=$_fzt_explorer_var_git_status'\033[1;33m!'"$_fzt_explorer_var_git_diff_mod"'\033[0m'
         fi
         if [ $_fzt_explorer_var_git_diff_untrack -gt 0 ]; then
-          _fzt_explorer_var_git_diff=$_fzt_explorer_var_git_diff'\033[1;31m?'"$_fzt_explorer_var_git_diff_untrack"'\033[0m'
-        fi
-        if [ $_fzt_explorer_var_git_diff_committed -gt 0 ]; then
-          _fzt_explorer_var_git_diff=$_fzt_explorer_var_git_diff'\033[1;32m\uf148'"$_fzt_explorer_var_git_diff_committed"'\033[0m'
+          _fzt_explorer_var_git_status=$_fzt_explorer_var_git_status'\033[1;31m?'"$_fzt_explorer_var_git_diff_untrack"'\033[0m'
         fi
       fi
-      _fzt_explorer_var_git_current_branch=$(echo '\uf1d3'  $_fzt_explorer_var_git_current_branch $_fzt_explorer_var_git_diff)
+      _fzt_explorer_var_git_current_branch=$(echo '\uf1d3'  $_fzt_explorer_var_git_current_branch $_fzt_explorer_var_git_status)
     fi
     # fzfでのディレクトリの選択
     local _fzt_explorer_var_selected_path=$(echo $_fzt_explorer_var_dir_list | fzf --height 50% --preview-window right:40% --ansi +m --prompt="$_fzt_explorer_var_promp >" --cycle --info="inline" --header="$_fzt_explorer_var_git_current_branch" --bind "$_fzt_explorer_var_keybindings" --preview="echo {} | cut -f 2 -d ' ' | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then ls -ldhG {a}; batcat {a} --color=always --style=grid --line-range :100; else ls -ldhG {a}; echo; lsi {a}; fi'")
