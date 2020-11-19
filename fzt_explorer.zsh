@@ -40,7 +40,7 @@ function _fzt_explorer() {
         local _fzt_explorer_var_git_diff_untrack=$(echo $_fzt_explorer_var_git_diff | grep "^??" | wc -l)
         local _fzt_explorer_var_git_diff_mod=$(echo $_fzt_explorer_var_git_diff | grep "^ M" | wc -l)
         local _fzt_explorer_var_git_diff_added=$(echo $_fzt_explorer_var_git_diff | grep "^M " | wc -l)
-        local _fzt_explorer_var_git_diff_committed=$(echo $(git log origin/$_fzt_explorer_var_git_current_branch...$_fzt_explorer_var_git_current_branch) | grep "^commit" | wc -l)
+        local _fzt_explorer_var_git_diff_committed=$(echo $(git log origin/$_fzt_explorer_var_git_current_branch...$_fzt_explorer_var_git_current_branch | grep "^commit" | wc -l))
         echo $_fzt_explorer_var_git_diff_committed
         _fzt_explorer_var_git_diff=''
         if [ $_fzt_explorer_var_git_diff_added -gt 0 ]; then
