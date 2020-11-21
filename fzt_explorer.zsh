@@ -1,7 +1,5 @@
 alias fe='_fzt_explorer'
 function _fzt_explorer() {
-  # クイックアクセス　作成時か削除時かctrl-cするとホームに飛ぶ
-  # クイックアクセス　リネーム欲しい
   setopt +o nomatch
   # ↓ここに実装する機能の名前を列挙する（forでステータス変数／ファイルが作成される）
   local _fzt_explorer_var_status_list=(endloop yank paste delete open undocd redocd shell hidden goup description hint rename mknew quickaccess register_quickaccess delete_quickaccess goto)
@@ -33,9 +31,34 @@ function _fzt_explorer() {
     else;
       local _fzt_explorer_var_dir_list="../\n`lsi -a`"
     fi
-    promp=$(echo $PWD | sed -e "s:$HOME:~:")
+    local _fzt_explorer_var_promp=$(echo $PWD | sed -e "s:$HOME:~:")
+    local _fzt_explorer_var_is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
+    if [ -n "$_fzt_explorer_var_is_git_dir" ]; then
+      local _fzt_explorer_var_git_current_branch=$(echo $(git branch --show-current))
+      local _fzt_explorer_var_git_diff=$(git status --short)
+      local _fzt_explorer_var_git_status=''
+      local _fzt_explorer_var_git_diff_committed=$(echo $(git log origin/$_fzt_explorer_var_git_current_branch...$_fzt_explorer_var_git_current_branch | grep "^commit" | wc -l))
+      if [ $_fzt_explorer_var_git_diff_committed -gt 0 ]; then
+        _fzt_explorer_var_git_status=$_fzt_explorer_var_git_status'\033[1;32m\uf148'"$_fzt_explorer_var_git_diff_committed"'\033[0m'
+      fi
+      if [ -n "$_fzt_explorer_var_git_diff" ]; then
+        local _fzt_explorer_var_git_diff_untrack=$(echo $_fzt_explorer_var_git_diff | grep "^??" | wc -l)
+        local _fzt_explorer_var_git_diff_mod=$(echo $_fzt_explorer_var_git_diff | grep "^ M" | wc -l)
+        local _fzt_explorer_var_git_diff_added=$(echo $_fzt_explorer_var_git_diff | grep "^M " | wc -l)
+        if [ $_fzt_explorer_var_git_diff_added -gt 0 ]; then
+          _fzt_explorer_var_git_status=$_fzt_explorer_var_git_status'\033[1;32m+'"$_fzt_explorer_var_git_diff_added"'\033[0m'
+        fi
+        if [ $_fzt_explorer_var_git_diff_mod -gt 0 ]; then
+          _fzt_explorer_var_git_status=$_fzt_explorer_var_git_status'\033[1;33m!'"$_fzt_explorer_var_git_diff_mod"'\033[0m'
+        fi
+        if [ $_fzt_explorer_var_git_diff_untrack -gt 0 ]; then
+          _fzt_explorer_var_git_status=$_fzt_explorer_var_git_status'\033[1;31m?'"$_fzt_explorer_var_git_diff_untrack"'\033[0m'
+        fi
+      fi
+      _fzt_explorer_var_git_current_branch=$(echo '\uf1d3'  $_fzt_explorer_var_git_current_branch $_fzt_explorer_var_git_status)
+    fi
     # fzfでのディレクトリの選択
-    local _fzt_explorer_var_selected_path=$(echo $_fzt_explorer_var_dir_list | fzf --height 50% --preview-window right:40% --ansi +m --prompt="$promp >" --bind "$_fzt_explorer_var_keybindings" --preview="echo {} | cut -f 2 -d ' ' | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then ls -ldhG {a}; batcat {a} --color=always --style=grid --line-range :100; else ls -ldhG {a}; echo; lsi {a}; fi'")
+    local _fzt_explorer_var_selected_path=$(echo $_fzt_explorer_var_dir_list | fzf --height 50% --preview-window right:40% --ansi +m --prompt="$_fzt_explorer_var_promp >" --cycle --info="inline" --header="$_fzt_explorer_var_git_current_branch" --bind "$_fzt_explorer_var_keybindings" --preview="echo {} | cut -f 2 -d ' ' | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then ls -ldhG {a}; batcat {a} --color=always --style=grid --line-range :100; else ls -ldhG {a}; echo; lsi {a}; fi'")
     # local _fzt_explorer_var_selected_path=$(echo $_fzt_explorer_var_dir_list | fzf --height 50% --preview-window right:40% --ansi +m --prompt="$PWD >" --bind "$_fzt_explorer_var_keybindings" --preview="echo {} | cut -f 2 -d ' ' | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then ls -ldhG {a}; richcat {a} -w 30; else ls -ldhG {a}; echo; lsi {a}; fi'")
     _fzt_explorer_var_endloop=$(cat ~/.fzt_explorer/.status/.endloop.status)
     # 動作の分岐
@@ -278,7 +301,8 @@ function _fzt_explorer_func_description() {
 # READMEを表示
 function _fzt_explorer_func_hint() {
   echo '0' >| ~/.fzt_explorer/.status/.hint.status
-  vim ~/.fzt_explorer/ReadMe -c ":set readonly"
+  richcat ~/.fzt_explorer/ReadMe.md -w 0.9 | fzf --height=80% --ansi --bind "alt-h:abort,alt-j:down,alt-k:up,alt-l:abort,alt-c:abort,ESC:abort"
+  # vim ~/.fzt_explorer/ReadMe.md -c ":set readonly"
 }
 
 # 新しくファイルかディレクトリを作る
