@@ -33,8 +33,8 @@ function _fzt_explorer() {
     fi
     local _fzt_explorer_var_promp=$(echo $PWD | sed -e "s:$HOME:~:")
     local _fzt_explorer_var_is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
-    local _fzt_explorer_var_git_current_branch=$(echo $(git branch --show-current))
     if [ -n "$_fzt_explorer_var_is_git_dir" ]; then
+      local _fzt_explorer_var_git_current_branch=$(echo $(git branch --show-current))
       local _fzt_explorer_var_git_diff=$(git status --short)
       local _fzt_explorer_var_git_status=''
       local _fzt_explorer_var_git_diff_committed=$(echo $(git log origin/$_fzt_explorer_var_git_current_branch...$_fzt_explorer_var_git_current_branch | grep "^commit" | wc -l))
