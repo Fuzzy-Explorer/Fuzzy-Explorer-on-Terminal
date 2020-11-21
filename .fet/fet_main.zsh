@@ -93,7 +93,7 @@ do # -------------ループ開始------------- #
     elif [ $_fet_status_undocd = '1' ]; then
       . ~/.fet/function/fet_undocd.zsh
     elif [ $_fet_status_redocd = '1' ]; then
-      _fet_func_redocd
+      . ~/.fet/function/fet_redocd.zsh
     elif [ $_fet_status_shell = '1' ]; then
       _fet_func_shell
     elif [ $_fet_status_description = '1' ]; then
@@ -218,23 +218,6 @@ function _fet_func_open() {
   trap 'return' SIGINT
   vared _fet_var_cmd;
   "$_fet_var_cmd" $_fet_path_selected_path
-}
-
-# 進む
-function _fet_func_redocd() {
-  echo '0' >| ~/.fet/.status/.redocd.status
-  local _fet_path_following_dirs_num="${#_fet_path_following_dirs[@]}"
-  if [ $_fet_path_following_dirs_num -gt 0 ]; then
-    _fet_path_selected_path=${_fet_path_following_dirs[$_fet_path_following_dirs_num]}
-    unset _fet_path_following_dirs[$_fet_path_following_dirs_num]
-    _fet_path_following_dirs=(${_fet_path_following_dirs[@]})
-    if [ -n "$_fet_path_selected_path" ]; then
-      _fet_path_previous_dirs+=($PWD)
-      function chpwd() {}
-      cd $_fet_path_selected_path
-      function chpwd() {lsi ././}
-    fi
-  fi
 }
 
 # コマンド実行モード
