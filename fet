@@ -1,0 +1,5 @@
+if [ "$0" = "bash" ]; then
+  ~/.fet/fet_main.bash
+else
+  cd $(~/.fet/fet_main.zsh)
+fi
