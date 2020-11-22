@@ -107,7 +107,7 @@ do # -------------ループ開始------------- #
     elif [ $_fet_status_register_quickaccess = '1' ]; then
       _fet_func_register_quickaccess
     elif [ $_fet_status_goto = '1' ]; then
-      _fet_func_goto
+      . ~/.fet/function/fet_goto.zsh
     else;
       if (test -d $_fet_path_selected_path); then
         . ~/.fet/function/fet_cd.zsh
@@ -350,26 +350,3 @@ function _fet_func_delete_quickaccess() {
   done
 }
 
-# GoTo（パスジャンプ）
-function _fet_func_goto() {
-  echo '0' >| ~/.fet/.status/.goto.status
-  echo 'Please write Path or drag file/directory from Windows Explorer.'
-  local _fet_var_goto_path=''
-  trap 'return' SIGINT
-  vared _fet_var_goto_path
-  _fet_var_goto_fzt_path=$(eval "echo $_fet_var_goto_path")
-  if [ -d "$_fet_var_goto_fzt_path" ]; then
-    function chpwd() {}
-    cd "$_fet_var_goto_fzt_path"
-    function chpwd() {lsi ././}
-  else;
-    local _fet_var_goto_win_path=$(eval 'fztpath -u "$_fet_var_goto_path"')
-    if [ -d "$_fet_var_goto_win_path" ]; then
-      function chpwd() {}
-      cd "$_fet_var_goto_win_path"
-      function chpwd() {lsi ././}
-    else;
-      echo 'no such directory.'
-    fi
-  fi
-}
