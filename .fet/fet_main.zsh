@@ -1,13 +1,25 @@
 #!/bin/zsh
 setopt +o nomatch
 # ↓ここに実装する機能の名前を列挙する（forでステータス変数／ファイルが作成される）
-local _fet_status_list=(endloop yank paste delete openwith undocd redocd shell hidden goup description help rename mknew quickaccess register_quickaccess delete_quickaccess goto)
+local _fet_general_status_list=(endloop goup)
+local _fet_function_status_list=(undocd redocd description help goto)
+local _fet_plugins_status_list=(file_operation/yank file_operation/paste file_operation/delete file_operation/openwith file_operation/rename file_operation/mknew magic/shell quickaccess/quickaccess quickaccess/register_quickaccess)
 # ステータスファイル初期化
-for var in $_fet_status_list
+for var in $_fet_general_status_list
 do
   echo '0' >| ~/.fet/.status/.$var.status
 done
+for var in $_fet_function_status_list
+do
+  echo '0' >| ~/.fet/.status/.$var.status
+done
+for var in $_fet_plugins_status_list
+do
+  var=$(echo $var | sed 's:/:_:')
+  echo '0' >| ~/.fet/.status/.$var.status
+done
 echo >| ~/.fet/.status/.hidden.status
+
 # 変数宣言
 _fet_status_yank_content=''
 _fet_path_previous_dirs=()
@@ -67,11 +79,12 @@ do # -------------ループ開始------------- #
       _fet_path_selected_path=`echo $_fet_path_selected_path | sed 's/\x1b\[[0-9;]*m//g' | awk -F"── " '{print $2}' | awk -F" / " '{print $1}'`
     fi
     # 全ステータス読み込み
-    for var in $_fet_status_list
+    ## General status
+    local _fet_status_no_key='yes'
+    for var in $_fet_general_status_list
     do
       local _fet_status_$var=$(cat ~/.fet/.status/.$var.status)
     done
-    # 上にいくか，その場でとどまるかを制御
     if [ -n "$_fet_path_selected_path" ]; then
     elif [ "$_fet_status_goup" = '0' ]; then
       _fet_path_selected_path="./"
@@ -79,64 +92,32 @@ do # -------------ループ開始------------- #
       echo '0' >| ~/.fet/.status/.goup.status
       _fet_path_selected_path="../"
     fi
-    # キーバインドの関数実行
-    local _fet_status_no_key='yes'
-    if [ $_fet_status_undocd = '1' ]; then
-      . ~/.fet/function/undocd.zsh
-      _fet_status_no_key='no'
-    fi
-    if [ $_fet_status_redocd = '1' ]; then
-      . ~/.fet/function/redocd.zsh
-      _fet_status_no_key='no'
-    fi
-    if [ $_fet_status_description = '1' ]; then
-      . ~/.fet/function/description.zsh
-      _fet_status_no_key='no'
-    fi
-    if [ $_fet_status_help = '1' ]; then
-      . ~/.fet/function/help.zsh
-      _fet_status_no_key='no'
-    fi
-    if [ $_fet_status_goto = '1' ]; then
-      . ~/.fet/function/goto.zsh
-      _fet_status_no_key='no'
-    fi
-    if [ $_fet_status_shell = '1' ]; then
-      . ~/.fet/plugins/magic/shell.zsh
-      _fet_status_no_key='no'
-    fi
-    if [ $_fet_status_mknew = '1' ]; then
-      . ~/.fet/plugins/file_operation/mknew.zsh
-      _fet_status_no_key='no'
-    fi
-    if [ $_fet_status_quickaccess = '1' ]; then
-      . ~/.fet/plugins/quickaccess/quickaccess.zsh
-      _fet_status_no_key='no'
-    fi
-    if [ $_fet_status_register_quickaccess = '1' ]; then
-      . ~/.fet/plugins/quickaccess/register_quickaccess.zsh
-      _fet_status_no_key='no'
-    fi
-    if [ $_fet_status_yank = '1' ]; then
-      . ~/.fet/plugins/file_operation/yank.zsh
-      _fet_status_no_key='no'
-    fi
-    if [ $_fet_status_paste = '1' ]; then
-      . ~/.fet/plugins/file_operation/paste.zsh
-      _fet_status_no_key='no'
-    fi
-    if [ $_fet_status_delete = '1' ]; then
-      . ~/.fet/plugins/file_operation/delete.zsh
-      _fet_status_no_key='no'
-    fi
-    if [ $_fet_status_rename = '1' ]; then
-      . ~/.fet/plugins/file_operation/rename.zsh
-      _fet_status_no_key='no'
-    fi
-    if [ $_fet_status_openwith = '1' ]; then
-      . ~/.fet/plugins/file_operation/openwith.zsh
-      _fet_status_no_key='no'
-    fi
+
+    ## Function status
+    for var in $_fet_function_status_list
+    do
+      local _fet_status_$var=$(cat ~/.fet/.status/.$var.status)
+      local status_var=_fet_status_$var
+      status_var=$(eval echo \"\$$status_var\")
+      if [ "$status_var" = '1' ]; then
+        . ~/.fet/function/$var.zsh
+        _fet_status_no_key='no'
+      fi
+    done
+
+    ## Plugins status
+    for var in $_fet_plugins_status_list
+    do
+      var_sed=$(echo $var | sed 's:/:_:')
+      local _fet_status_$var_sed=$(cat ~/.fet/.status/.$var_sed.status)
+      local status_var=_fet_status_$var_sed
+      status_var=$(eval echo \"\$$status_var\")
+      if [ "$status_var" = '1' ]; then
+        . ~/.fet/plugins/$var.zsh
+        _fet_status_no_key='no'
+      fi
+    done
+
     if [ $_fet_status_no_key = 'yes' ]; then
       if (test -d $_fet_path_selected_path); then
         . ~/.fet/function/cd.zsh

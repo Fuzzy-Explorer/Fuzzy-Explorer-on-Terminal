@@ -1,5 +1,5 @@
 #!/bin/zsh
-echo '0' >| ~/.fet/.status/.yank.status
+echo '0' >| ~/.fet/.status/.file_operation_yank.status
 _fet_var_yank_content=$PWD/$_fet_path_selected_path
 local has_win32yank=$(which win32yank.exe)
 if [ -n $has_win32yank ]; then

@@ -1,7 +1,7 @@
 #!/bin/zsh
 local -A pathes=()
 IFS=$'\n'
-for _dict in `cat ~/.fet/user/data/quickaccess.csv`
+for _dict in `cat ~/.fet/user/data/quickaccess_quickaccess.csv`
 do
   local _key=$(echo $_dict | awk -F", *" '{print $1}' )
   local _value=$(echo $_dict | awk -F", *" '{print $2}' )

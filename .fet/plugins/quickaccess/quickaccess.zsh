@@ -1,5 +1,5 @@
 #!/bin/zsh
-echo '0' >| ~/.fet/.status/.quickaccess.status
+echo '0' >| ~/.fet/.status/.quickaccess_quickaccess.status
 while :
 do
   local -A _fet_var_quickaccess_pathes=()
