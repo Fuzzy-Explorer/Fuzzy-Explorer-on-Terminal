@@ -60,7 +60,7 @@ do
     if [ -n "$_fet_var_git_diff" ]; then
       local _fet_var_git_diff_untrack=$(echo $_fet_var_git_diff | grep "^??" | wc -l)
       local _fet_var_git_diff_mod=$(echo $_fet_var_git_diff | grep -e "^ M" -e "^ D" | wc -l)
-      local _fet_var_git_diff_added=$(echo $_fet_var_git_diff | grep "^M " | wc -l)
+      local _fet_var_git_diff_added=$(echo $_fet_var_git_diff | grep -e "^M " -e "^D "| wc -l)
       if [ $_fet_var_git_diff_added -gt 0 ]; then
         _fet_var_git_status=$_fet_var_git_status'\033[1;32m+'"$_fet_var_git_diff_added"'\033[0m'
       fi
