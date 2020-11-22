@@ -1,5 +1,6 @@
 #!/bin/zsh
 echo '0' >| ~/.fet/.status/.quickaccess_quickaccess.status
+echo '0' >| ~/.fet/.status/.quickaccess_delete_quickaccess.status
 while :
 do
   local -A _fet_var_quickaccess_pathes=()
@@ -19,11 +20,10 @@ do
     fi
     _fet_var_quickaccess_pathes[$_key]=$_value
   done
-  _fet_quickaccess_name=$(echo $_fet_quickaccess_name | fzf --ansi +m --prompt="QuickAccess > " --bind="DEL:execute-silent(echo '1' >| ~/.fet/.status/.delete_quickaccess.status)+accept,alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,ESC:abort")
+  _fet_quickaccess_name=$(echo $_fet_quickaccess_name | fzf --ansi +m --prompt="QuickAccess > " --bind="DEL:execute-silent(echo '1' >| ~/.fet/.status/.quickaccess_delete_quickaccess.status)+accept,alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,ESC:abort")
   _fet_quickaccess_name=$(echo $_fet_quickaccess_name | awk -F"\t" '{print $2}' )
-  local _fet_var_delete_quickaccess=$(cat ~/.fet/.status/.delete_quickaccess.status)
+  local _fet_var_delete_quickaccess=$(cat ~/.fet/.status/.quickaccess_delete_quickaccess.status)
   if [ $_fet_var_delete_quickaccess = '1' ]; then
-    echo '0' >| ~/.fet/.status/.delete_quickaccess.status
     echo "do you want to delete '$_fet_quickaccess_name'? (y/n)"
     read -r;
     if [ "$REPLY" = "y" ]; then

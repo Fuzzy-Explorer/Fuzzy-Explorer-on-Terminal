@@ -25,6 +25,7 @@ _fet_status_yank_content=''
 _fet_path_previous_dirs=()
 _fet_path_following_dirs=()
 local _fet_var_keybindings=$(cat ~/.fet/keybindings.setting | tr '\n' ',' | sed 's/,$//')
+
 # 引数を調べる
 if [ $# -gt 0 ]; then
   if [ -d "$@" ]; then
@@ -32,8 +33,12 @@ if [ $# -gt 0 ]; then
     _fet_func_change_directory
   fi
 fi
+
+# -------------------------------------------------------- #
+# ---------------------- ループ開始 ---------------------- #
+# -------------------------------------------------------- #
 while :
-do # -------------ループ開始------------- #
+do
   # 隠しディレクトリ表示の判定
   local _fet_status_hidden=$(( $(cat ~/.fet/.status/.hidden.status | wc -l) % 2 ))
   # ディレクトリ一覧の取得
@@ -118,6 +123,7 @@ do # -------------ループ開始------------- #
       fi
     done
 
+    ## cd or execute
     if [ $_fet_status_no_key = 'yes' ]; then
       if (test -d $_fet_path_selected_path); then
         . ~/.fet/function/cd.zsh
