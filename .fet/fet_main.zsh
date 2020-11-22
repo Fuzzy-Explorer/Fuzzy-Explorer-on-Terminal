@@ -105,7 +105,7 @@ do # -------------ループ開始------------- #
     elif [ $_fet_status_quickaccess = '1' ]; then
       . ~/.fet/plugins/quickaccess/quickaccess.zsh
     elif [ $_fet_status_register_quickaccess = '1' ]; then
-      _fet_func_register_quickaccess
+      . ~/.fet/plugins/quickaccess/register_quickaccess.zsh
     elif [ $_fet_status_goto = '1' ]; then
       . ~/.fet/function/fet_goto.zsh
     else;
@@ -127,7 +127,7 @@ lsi ././
 alias win='_fet_func_windows_shortcut'
 function _fet_func_windows_shortcut() {
   local dir=""
-  local -A pathes 
+  local -A pathes=()
   IFS=$'\n'
   for _dict in `cat ~/.fet/windows_shortcut.setting`
   do
@@ -164,48 +164,5 @@ function _fet_func_shell() {
   function chpwd() {}
   eval "$_fet_var_cmd"
   function chpwd() {lsi ././}
-}
-
-# クイックアクセスの登録
-function _fet_func_register_quickaccess() {
-  echo '0' >| ~/.fet/.status/.register_quickaccess.status
-  echo 'Please write name of this quickaccess.'
-  local name_of_qa=$_fet_path_selected_path
-  trap 'return' SIGINT
-  vared name_of_qa
-  name_of_qa=$(echo $name_of_qa | sed 's/,/_/' | sed 's/\t/ /')
-  local -A pathes 
-  IFS=$'\n'
-  for _dict in `cat ~/.fet/quickaccess.setting`
-  do
-    local _key=$(echo $_dict | awk -F", *" '{print $1}' )
-    local _value=$(echo $_dict | awk -F", *" '{print $2}' )
-    pathes[$_key]=$_value
-  done
-  pathes[$name_of_qa]=$PWD/$_fet_path_selected_path
-  echo >| ~/.fet/quickaccess.setting
-  for key in ${(k)pathes}; do
-    echo "$key, ${pathes[$key]}" >> ~/.fet/quickaccess.setting
-  done
-}
-
-# クイックアクセスの削除
-function _fet_func_delete_quickaccess() {
-  local -A pathes 
-  IFS=$'\n'
-  for _dict in `cat ~/.fet/quickaccess.setting`
-  do
-    local _key=$(echo $_dict | awk -F", *" '{print $1}' )
-    local _value=$(echo $_dict | awk -F", *" '{print $2}' )
-    pathes[$_key]=$_value
-  done
-  echo >| ~/.fet/quickaccess.setting
-  for key in ${(k)pathes}; do
-    local _virtual_key="$key"
-    if [ $_fet_quickaccess_name = $_virtual_key ]; then
-    else;
-      echo "$key, ${pathes[$key]}" >> ~/.fet/quickaccess.setting
-    fi
-  done
 }
 

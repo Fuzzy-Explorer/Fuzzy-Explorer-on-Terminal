@@ -27,7 +27,7 @@ do
     echo "do you want to delete '$_fet_quickaccess_name'? (y/n)"
     read -r;
     if [ "$REPLY" = "y" ]; then
-      _fet_func_delete_quickaccess
+      . ~/.fet/plugins/quickaccess/delete_quickaccess.zsh
     fi
   else;
     if [ -n $_fet_quickaccess_name ]; then
@@ -46,7 +46,7 @@ do
         echo "do yo want to delete quickaccess:'$_fet_quickaccess_name'? (y/n)"
         read -r;
         if [ "$REPLY" = "y" ]; then
-          _fet_func_delete_quickaccess
+          . ~/.fet/plugins/quickaccess/delete_quickaccess.zsh
         fi
       fi
     fi
