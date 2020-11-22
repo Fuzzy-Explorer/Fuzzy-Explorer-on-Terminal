@@ -83,7 +83,7 @@ do # -------------ループ開始------------- #
     if [ $_fet_status_yank = '1' ]; then
       . ~/.fet/plugins/file_operation/yank.zsh
     elif [ $_fet_status_paste = '1' ]; then
-      _fet_func_paste
+      . ~/.fet/plugins/file_operation/paste.zsh
     elif [ $_fet_status_delete = '1' ]; then
       _fet_func_delete
     elif [ $_fet_status_rename = '1' ]; then
@@ -99,6 +99,7 @@ do # -------------ループ開始------------- #
     elif [ $_fet_status_description = '1' ]; then
       . ~/.fet/function/description.zsh
     elif [ $_fet_status_help = '1' ]; then
+      . ~/.fet/function/fet_help.zsh
     elif [ $_fet_status_mknew = '1' ]; then
       _fet_func_mknew
     elif [ $_fet_status_quickaccess = '1' ]; then
@@ -149,16 +150,6 @@ function _fet_func_destruction() {
   unset _fet_path_previous_dirs
   unset _fet_path_following_dirs
   unset _fet_var_yank_content
-}
-
-# ファイルペースト
-function _fet_func_paste() {
-  echo '0' >| ~/.fet/.status/.paste.status
-  if [ $_fet_var_yank_content = '' ]; then
-  else;
-    cp -ri "$_fet_var_yank_content" "$PWD/"
-    echo "paste complete $_fet_var_yank_content -> $PWD/"
-  fi
 }
 
 # ファイル削除
