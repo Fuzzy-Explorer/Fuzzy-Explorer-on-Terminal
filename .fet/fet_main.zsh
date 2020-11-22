@@ -101,7 +101,7 @@ do # -------------ループ開始------------- #
     elif [ $_fet_status_help = '1' ]; then
       . ~/.fet/function/fet_help.zsh
     elif [ $_fet_status_mknew = '1' ]; then
-      _fet_func_mknew
+      . ~/.fet/plugins/file_operation/mknew.zsh
     elif [ $_fet_status_quickaccess = '1' ]; then
       _fet_func_quickaccess
     elif [ $_fet_status_register_quickaccess = '1' ]; then
@@ -164,24 +164,6 @@ function _fet_func_shell() {
   function chpwd() {}
   eval "$_fet_var_cmd"
   function chpwd() {lsi ././}
-}
-
-# 新しくファイルかディレクトリを作る
-function _fet_func_mknew() {
-  echo '0' >| ~/.fet/.status/.mknew.status
-  echo "Make dir or file.\nPlease write new dir or file name. (If last char is /, make dir.)"
-  local _fet_var_new_mk_name=''
-  trap 'return' SIGINT
-  vared _fet_var_new_mk_name;
-  _fet_var_new_mk_name=$(echo $_fet_var_new_mk_name | grep -v -E "^/")
-  if [ -n "$_fet_var_new_mk_name" ]; then
-    local _fet_var_check_file_dir=$(echo $_fet_var_new_mk_name | grep -E "/$")
-    if [ -n "$_fet_var_check_file_dir" ]; then
-      mkdir $_fet_var_check_file_dir
-    else;
-      touch $_fet_var_new_mk_name
-    fi
-  fi
 }
 
 # クイックアクセス
