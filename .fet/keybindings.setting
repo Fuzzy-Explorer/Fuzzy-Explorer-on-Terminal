@@ -20,7 +20,7 @@ alt-r:execute-silent(echo 1 >| ~/.fet/.status/.redocd.status)+abort
 alt-s:execute-silent(echo 1 >| ~/.fet/.status/.shell.status)+abort
 alt-a:execute(echo >> ~/.fet/.status/.hidden.status)+abort
 alt-d:execute(echo 1 >| ~/.fet/.status/.description.status)+accept
-alt-/:execute(echo 1 >| ~/.fet/.status/.hint.status)+abort
+alt-/:execute(echo 1 >| ~/.fet/.status/.help.status)+abort
 alt-n:execute(echo 1 >| ~/.fet/.status/.rename.status)+accept
 alt-m:execute(echo 1 >| ~/.fet/.status/.mknew.status)+abort
 alt-q:execute(echo 1 >| ~/.fet/.status/.quickaccess.status)+abort

@@ -1,7 +1,7 @@
 #!/bin/zsh
 setopt +o nomatch
 # ↓ここに実装する機能の名前を列挙する（forでステータス変数／ファイルが作成される）
-local _fet_status_list=(endloop yank paste delete open undocd redocd shell hidden goup description hint rename mknew quickaccess register_quickaccess delete_quickaccess goto)
+local _fet_status_list=(endloop yank paste delete open undocd redocd shell hidden goup description help rename mknew quickaccess register_quickaccess delete_quickaccess goto)
 # ステータスファイル初期化
 for var in $_fet_status_list
 do
@@ -98,8 +98,8 @@ do # -------------ループ開始------------- #
       _fet_func_shell
     elif [ $_fet_status_description = '1' ]; then
       _fet_func_description
-    elif [ $_fet_status_hint = '1' ]; then
-      _fet_func_hint
+    elif [ $_fet_status_help = '1' ]; then
+      . ~/.fet/function/fet_help.zsh
     elif [ $_fet_status_mknew = '1' ]; then
       _fet_func_mknew
     elif [ $_fet_status_quickaccess = '1' ]; then
@@ -232,13 +232,6 @@ function _fet_func_description() {
     fi
     vim "$PWD/.file_description.lsi" -c /$_fet_path_selected_path
   fi
-}
-
-# READMEを表示
-function _fet_func_hint() {
-  echo '0' >| ~/.fet/.status/.hint.status
-  richcat ~/.fet/ReadMe.md -w 0.9 | fzf --height=80% --ansi --bind "alt-h:abort,alt-j:down,alt-k:up,alt-l:abort,alt-c:abort,ESC:abort"
-  # vim ~/.fet/ReadMe.md -c ":set readonly"
 }
 
 # 新しくファイルかディレクトリを作る
