@@ -91,15 +91,15 @@ do # -------------ループ開始------------- #
     elif [ $_fet_status_openwith = '1' ]; then
       . ~/.fet/plugins/file_operation/openwith.zsh
     elif [ $_fet_status_undocd = '1' ]; then
-      . ~/.fet/function/fet_undocd.zsh
+      . ~/.fet/function/undocd.zsh
     elif [ $_fet_status_redocd = '1' ]; then
-      . ~/.fet/function/fet_redocd.zsh
+      . ~/.fet/function/redocd.zsh
     elif [ $_fet_status_shell = '1' ]; then
-      _fet_func_shell
+      . ~/.fet/plugins/magic/shell.zsh
     elif [ $_fet_status_description = '1' ]; then
       . ~/.fet/function/description.zsh
     elif [ $_fet_status_help = '1' ]; then
-      . ~/.fet/function/fet_help.zsh
+      . ~/.fet/function/help.zsh
     elif [ $_fet_status_mknew = '1' ]; then
       . ~/.fet/plugins/file_operation/mknew.zsh
     elif [ $_fet_status_quickaccess = '1' ]; then
@@ -107,62 +107,39 @@ do # -------------ループ開始------------- #
     elif [ $_fet_status_register_quickaccess = '1' ]; then
       . ~/.fet/plugins/quickaccess/register_quickaccess.zsh
     elif [ $_fet_status_goto = '1' ]; then
-      . ~/.fet/function/fet_goto.zsh
+      . ~/.fet/function/goto.zsh
     else;
       if (test -d $_fet_path_selected_path); then
-        . ~/.fet/function/fet_cd.zsh
+        . ~/.fet/function/cd.zsh
       else;
-        # vim "$_fet_path_selected_path"
-        . ~/.fet/function/fet_execute.zsh
+        . ~/.fet/function/execute.zsh $_fet_path_selected_path
       fi
     fi
   else;
     break
   fi
 done
-_fet_func_destruction
+. ~/.fet/function/destruction.zsh
 lsi ././
 
 # ウィンドウズのディレクトリへのショートカット
 alias win='_fet_func_windows_shortcut'
 function _fet_func_windows_shortcut() {
-  local dir=""
-  local -A pathes=()
-  IFS=$'\n'
-  for _dict in `cat ~/.fet/windows_shortcut.setting`
-  do
-    local _key=$(echo $_dict | awk -F", *" '{print $1}' )
-    local _value=$(echo $_dict | awk -F", *" '{print $2}' )
-    pathes[$_key]=$_value
-  done
-  for key in ${(k)pathes}; do
+local dir=""
+local -A pathes=()
+IFS=$'\n'
+for _dict in `cat ~/.fet/windows_shortcut.setting`
+do
+  local _key=$(echo $_dict | awk -F", *" '{print $1}' )
+  local _value=$(echo $_dict | awk -F", *" '{print $2}' )
+  pathes[$_key]=$_value
+done
+for key in ${(k)pathes}; do
     dir="$key\n$dir"
   done
   dir=$(echo $dir |fzf +m --prompt="Dir > ")
   if [ -n "$dir" ]; then
     cd $pathes[$dir]
   fi
-}
-
-# メモリ開放
-function _fet_func_destruction() {
-  unset _fet_path_selected_path
-  unset _fet_path_previous_dirs
-  unset _fet_path_following_dirs
-  unset _fet_var_yank_content
-}
-
-# コマンド実行モード
-function _fet_func_shell() {
-  echo '0' >| ~/.fet/.status/.shell.status
-  echo 'please write command...'
-  local _fet_var_cmd='';
-  trap 'return' SIGINT
-  vared _fet_var_cmd;
-  _fet_path_previous_dirs+=($PWD)
-  _fet_path_following_dirs=()
-  function chpwd() {}
-  eval "$_fet_var_cmd"
-  function chpwd() {lsi ././}
 }
 

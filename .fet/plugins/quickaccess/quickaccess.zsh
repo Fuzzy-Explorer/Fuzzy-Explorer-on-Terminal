@@ -5,7 +5,7 @@ do
   local -A _fet_var_quickaccess_pathes=()
   local _fet_quickaccess_name=""
   IFS=$'\n'
-  for _dict in `cat ~/.fet/quickaccess.setting`
+  for _dict in `cat ~/.fet/user/data/quickaccess.csv`
   do
     local _key=$(echo $_dict | awk -F", *" '{print $1}' )
     local _value=$(echo $_dict | awk -F", *" '{print $2}' )
@@ -39,7 +39,7 @@ do
         function chpwd() {lsi ././}
         break
       elif [ -f $_fet_var_quickaccess_pathes[$_fet_quickaccess_name] ]; then
-        _fet_func_exec $_fet_var_quickaccess_pathes[$_fet_quickaccess_name]
+        . ~/.fet/function/execute.zsh $_fet_var_quickaccess_pathes[$_fet_quickaccess_name]
         break
       else;
         echo "no such file or directory. ($_fet_var_quickaccess_pathes[$_fet_quickaccess_name])"
