@@ -7,6 +7,10 @@ vared input_qaname
 input_qaname=$(echo $input_qaname | sed 's/,/_/' | sed 's/\t/ /')
 local -A pathes=()
 IFS=$'\n'
+if [ -f ~/.fet/user/data/quickaccess.csv ]; then
+else
+  touch ~/.fet/user/data/quickaccess.csv
+fi
 for _dict in `cat ~/.fet/user/data/quickaccess.csv`
 do
   local _key=$(echo $_dict | awk -F", *" '{print $1}' )

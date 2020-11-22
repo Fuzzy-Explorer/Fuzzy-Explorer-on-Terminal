@@ -9,7 +9,6 @@ do
   pathes[$_key]=$_value
 done
 echo >| ~/.fet/user/data/quickaccess.csv
-echo $pathes
 for key in ${(k)pathes}; do
   local _virtual_key="$key"
   if [ $_fet_quickaccess_name = $_virtual_key ]; then

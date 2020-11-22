@@ -6,6 +6,10 @@ do
   local -A _fet_var_quickaccess_pathes=()
   local _fet_quickaccess_name=""
   IFS=$'\n'
+  if [ -f ~/.fet/user/data/quickaccess.csv ]; then
+  else
+    touch ~/.fet/user/data/quickaccess.csv
+  fi
   for _dict in `cat ~/.fet/user/data/quickaccess.csv`
   do
     local _key=$(echo $_dict | awk -F", *" '{print $1}' )
