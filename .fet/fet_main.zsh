@@ -80,35 +80,64 @@ do # -------------ループ開始------------- #
       _fet_path_selected_path="../"
     fi
     # キーバインドの関数実行
+    local _fet_status_no_key='yes'
+    if [ $_fet_status_undocd = '1' ]; then
+      . ~/.fet/function/undocd.zsh
+      _fet_status_no_key='no'
+    fi
+    if [ $_fet_status_redocd = '1' ]; then
+      . ~/.fet/function/redocd.zsh
+      _fet_status_no_key='no'
+    fi
+    if [ $_fet_status_description = '1' ]; then
+      . ~/.fet/function/description.zsh
+      _fet_status_no_key='no'
+    fi
+    if [ $_fet_status_help = '1' ]; then
+      . ~/.fet/function/help.zsh
+      _fet_status_no_key='no'
+    fi
+    if [ $_fet_status_goto = '1' ]; then
+      . ~/.fet/function/goto.zsh
+      _fet_status_no_key='no'
+    fi
+    if [ $_fet_status_shell = '1' ]; then
+      . ~/.fet/plugins/magic/shell.zsh
+      _fet_status_no_key='no'
+    fi
+    if [ $_fet_status_mknew = '1' ]; then
+      . ~/.fet/plugins/file_operation/mknew.zsh
+      _fet_status_no_key='no'
+    fi
+    if [ $_fet_status_quickaccess = '1' ]; then
+      . ~/.fet/plugins/quickaccess/quickaccess.zsh
+      _fet_status_no_key='no'
+    fi
+    if [ $_fet_status_register_quickaccess = '1' ]; then
+      . ~/.fet/plugins/quickaccess/register_quickaccess.zsh
+      _fet_status_no_key='no'
+    fi
     if [ $_fet_status_yank = '1' ]; then
       . ~/.fet/plugins/file_operation/yank.zsh
-    elif [ $_fet_status_paste = '1' ]; then
+      _fet_status_no_key='no'
+    fi
+    if [ $_fet_status_paste = '1' ]; then
       . ~/.fet/plugins/file_operation/paste.zsh
-    elif [ $_fet_status_delete = '1' ]; then
+      _fet_status_no_key='no'
+    fi
+    if [ $_fet_status_delete = '1' ]; then
       . ~/.fet/plugins/file_operation/delete.zsh
-    elif [ $_fet_status_rename = '1' ]; then
+      _fet_status_no_key='no'
+    fi
+    if [ $_fet_status_rename = '1' ]; then
       . ~/.fet/plugins/file_operation/rename.zsh
-    elif [ $_fet_status_openwith = '1' ]; then
+      _fet_status_no_key='no'
+    fi
+    if [ $_fet_status_openwith = '1' ]; then
       . ~/.fet/plugins/file_operation/openwith.zsh
-    elif [ $_fet_status_undocd = '1' ]; then
-      . ~/.fet/function/undocd.zsh
-    elif [ $_fet_status_redocd = '1' ]; then
-      . ~/.fet/function/redocd.zsh
-    elif [ $_fet_status_shell = '1' ]; then
-      . ~/.fet/plugins/magic/shell.zsh
-    elif [ $_fet_status_description = '1' ]; then
-      . ~/.fet/function/description.zsh
-    elif [ $_fet_status_help = '1' ]; then
-      . ~/.fet/function/help.zsh
-    elif [ $_fet_status_mknew = '1' ]; then
-      . ~/.fet/plugins/file_operation/mknew.zsh
-    elif [ $_fet_status_quickaccess = '1' ]; then
-      . ~/.fet/plugins/quickaccess/quickaccess.zsh
-    elif [ $_fet_status_register_quickaccess = '1' ]; then
-      . ~/.fet/plugins/quickaccess/register_quickaccess.zsh
-    elif [ $_fet_status_goto = '1' ]; then
-      . ~/.fet/function/goto.zsh
-    else;
+      _fet_status_no_key='no'
+    fi
+    if [ $_fet_status_no_key = 'yes' ]; then
       if (test -d $_fet_path_selected_path); then
         . ~/.fet/function/cd.zsh
       else;
@@ -123,23 +152,23 @@ done
 lsi ././
 
 # ウィンドウズのディレクトリへのショートカット
-alias win='_fet_func_windows_shortcut'
-function _fet_func_windows_shortcut() {
-local dir=""
-local -A pathes=()
-IFS=$'\n'
-for _dict in `cat ~/.fet/windows_shortcut.setting`
-do
-  local _key=$(echo $_dict | awk -F", *" '{print $1}' )
-  local _value=$(echo $_dict | awk -F", *" '{print $2}' )
-  pathes[$_key]=$_value
-done
-for key in ${(k)pathes}; do
-    dir="$key\n$dir"
-  done
-  dir=$(echo $dir |fzf +m --prompt="Dir > ")
-  if [ -n "$dir" ]; then
-    cd $pathes[$dir]
-  fi
-}
-
+# alias win='_fet_func_windows_shortcut'
+# function _fet_func_windows_shortcut() {
+#   local dir=""
+#   local -A pathes=()
+#   IFS=$'\n'
+#   for _dict in `cat ~/.fet/windows_shortcut.setting`
+#   do
+#     local _key=$(echo $_dict | awk -F", *" '{print $1}' )
+#     local _value=$(echo $_dict | awk -F", *" '{print $2}' )
+#     pathes[$_key]=$_value
+#   done
+#   for key in ${(k)pathes}; do
+#     dir="$key\n$dir"
+#   done
+#   dir=$(echo $dir |fzf +m --prompt="Dir > ")
+#   if [ -n "$dir" ]; then
+#     cd $pathes[$dir]
+#   fi
+# }
+#
