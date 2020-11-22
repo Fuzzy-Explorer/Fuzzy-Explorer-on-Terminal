@@ -85,9 +85,9 @@ do # -------------ループ開始------------- #
     elif [ $_fet_status_paste = '1' ]; then
       . ~/.fet/plugins/file_operation/paste.zsh
     elif [ $_fet_status_delete = '1' ]; then
-      _fet_func_delete
+      . ~/.fet/plugins/file_operation/delete.zsh
     elif [ $_fet_status_rename = '1' ]; then
-      _fet_func_rename
+      . ~/.fet/plugins/file_operation/rename.zsh
     elif [ $_fet_status_open = '1' ]; then
       _fet_func_open
     elif [ $_fet_status_undocd = '1' ]; then
@@ -150,27 +150,6 @@ function _fet_func_destruction() {
   unset _fet_path_previous_dirs
   unset _fet_path_following_dirs
   unset _fet_var_yank_content
-}
-
-# ファイル削除
-function _fet_func_delete() {
-  echo '0' >| ~/.fet/.status/.delete.status
-  rm -ri $PWD/$_fet_path_selected_path
-}
-
-# ファイル名リネーム
-function _fet_func_rename() {
-  echo '0' >| ~/.fet/.status/.rename.status
-  echo "please write new name of '$_fet_path_selected_path'"
-  local _fet_var_newname=$_fet_path_selected_path;
-  trap 'return' SIGINT
-  vared _fet_var_newname;
-  local _fet_var_check_not_include_slash=$(echo $_fet_var_newname | grep '/')
-  if [ -n "$_fet_var_check_not_include_slash" ]; then
-    echo "Including '/' is not valid."
-  else;
-    mv -iT "$PWD/$_fet_path_selected_path" "$PWD/$_fet_var_newname"
-  fi
 }
 
 # アプリを指定して開く
