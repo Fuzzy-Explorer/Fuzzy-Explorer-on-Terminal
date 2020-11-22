@@ -1,7 +1,7 @@
 #!/bin/zsh
 setopt +o nomatch
 # ↓ここに実装する機能の名前を列挙する（forでステータス変数／ファイルが作成される）
-local _fet_status_list=(endloop yank paste delete open undocd redocd shell hidden goup description help rename mknew quickaccess register_quickaccess delete_quickaccess goto)
+local _fet_status_list=(endloop yank paste delete openwith undocd redocd shell hidden goup description help rename mknew quickaccess register_quickaccess delete_quickaccess goto)
 # ステータスファイル初期化
 for var in $_fet_status_list
 do
@@ -88,8 +88,8 @@ do # -------------ループ開始------------- #
       . ~/.fet/plugins/file_operation/delete.zsh
     elif [ $_fet_status_rename = '1' ]; then
       . ~/.fet/plugins/file_operation/rename.zsh
-    elif [ $_fet_status_open = '1' ]; then
-      _fet_func_open
+    elif [ $_fet_status_openwith = '1' ]; then
+      . ~/.fet/plugins/file_operation/openwith.zsh
     elif [ $_fet_status_undocd = '1' ]; then
       . ~/.fet/function/fet_undocd.zsh
     elif [ $_fet_status_redocd = '1' ]; then
@@ -150,16 +150,6 @@ function _fet_func_destruction() {
   unset _fet_path_previous_dirs
   unset _fet_path_following_dirs
   unset _fet_var_yank_content
-}
-
-# アプリを指定して開く
-function _fet_func_open() {
-  echo '0' >| ~/.fet/.status/.open.status
-  echo 'please write command...'
-  local _fet_var_cmd='';
-  trap 'return' SIGINT
-  vared _fet_var_cmd;
-  "$_fet_var_cmd" $_fet_path_selected_path
 }
 
 # コマンド実行モード

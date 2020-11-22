@@ -14,7 +14,7 @@ backward-eof:execute-silent(echo 1 >| ~/.fet/.status/.goup.status)+abort
 alt-y:execute-silent(echo 1 >| ~/.fet/.status/.yank.status)+accept
 alt-p:execute-silent(echo 1 >| ~/.fet/.status/.paste.status)+abort
 DEL:execute-silent(echo 1 >| ~/.fet/.status/.delete.status)+accept
-alt-o:execute-silent(echo 1 >| ~/.fet/.status/.open.status)+accept
+alt-o:execute-silent(echo 1 >| ~/.fet/.status/.openwith.status)+accept
 alt-u:execute-silent(echo 1 >| ~/.fet/.status/.undocd.status)+abort
 alt-r:execute-silent(echo 1 >| ~/.fet/.status/.redocd.status)+abort
 alt-s:execute-silent(echo 1 >| ~/.fet/.status/.shell.status)+abort
