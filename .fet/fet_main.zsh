@@ -110,18 +110,18 @@ do # -------------ループ開始------------- #
       _fet_func_goto
     else;
       if (test -d $_fet_path_selected_path); then
-        . ~/.fet/function/fet_cd.zsh $_fet_path_selected_path
+        . ~/.fet/function/fet_cd.zsh
       else;
-        _fet_func_exec
+        # vim "$_fet_path_selected_path"
+        . ~/.fet/function/fet_execute.zsh
       fi
     fi
   else;
     break
   fi
 done
-# _fet_func_destruction
-# lsi ././
-echo $PWD
+_fet_func_destruction
+lsi ././
 
 # ウィンドウズのディレクトリへのショートカット
 alias win='_fet_func_windows_shortcut'
@@ -141,25 +141,6 @@ function _fet_func_windows_shortcut() {
   dir=$(echo $dir |fzf +m --prompt="Dir > ")
   if [ -n "$dir" ]; then
     cd $pathes[$dir]
-  fi
-}
-
-# ファイルを選択したときに呼ばれる関数（ファイル実行）
-function _fet_func_exec() {
-  local _fet_var_extensions_table=$(cat ~/.fet/extensions.setting)
-  local _fet_var_apps=$(echo $_fet_var_extensions_table | grep -E "^${@##*.}" | awk -F", " '{print $2}')
-  local _fet_var_apps_count=$(echo $_fet_var_apps | wc -l)
-  if [ $_fet_var_apps_count -gt 1 ]; then
-    local _fet_var_selected_app=$(echo $_fet_var_apps | fzf +m --prompt "Apps > " --bind "alt-h:abort,alt-l:accept,left:abort,right:accept,alt-j:down,alt-k:up,alt-c:abort,ESC:abort")
-  else;
-    if [ -n "$_fet_var_apps" ]; then
-      local _fet_var_selected_app=$_fet_var_apps
-    else;
-      local _fet_var_selected_app="vim"
-    fi
-  fi
-  if [ -n "$_fet_var_selected_app" ]; then
-    "$_fet_var_selected_app" $@
   fi
 }
 
