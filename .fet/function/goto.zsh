@@ -6,16 +6,18 @@ trap 'return' SIGINT
 vared input_path
 local ubuntu_path=$(eval "echo $input_path")
 if [ -d "$ubuntu_path" ]; then
-  function chpwd() {}
-  cd "$ubuntu_path"
-  function chpwd() {lsi ././}
+  . ~/.fet/function/cd.zsh "$ubuntu_path"
+  # function chpwd() {}
+  # cd "$ubuntu_path"
+  # function chpwd() {lsi ././}
 else;
   if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
     local windows_path=$(eval 'wslpath -u "$input_path"')
     if [ -d "$windows_path" ]; then
-      function chpwd() {}
-      cd "$windows_path"
-      function chpwd() {lsi ././}
+      . ~/.fet/function/cd.zsh "$windows_path"
+      # function chpwd() {}
+      # cd "$windows_path"
+      # function chpwd() {lsi ././}
     else;
       echo 'no such directory.'
     fi

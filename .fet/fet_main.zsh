@@ -112,7 +112,7 @@ do # -------------ループ開始------------- #
       if (test -d $_fet_path_selected_path); then
         . ~/.fet/function/cd.zsh
       else;
-        . ~/.fet/function/execute.zsh $_fet_path_selected_path
+        . ~/.fet/function/execute.zsh
       fi
     fi
   else;

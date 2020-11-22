@@ -32,11 +32,7 @@ do
   else;
     if [ -n $_fet_quickaccess_name ]; then
       if [ -d $_fet_var_quickaccess_pathes[$_fet_quickaccess_name] ]; then
-        function chpwd() {}
-        _fet_path_previous_dirs+=($PWD)
-        _fet_path_following_dirs=()
-        cd $_fet_var_quickaccess_pathes[$_fet_quickaccess_name]
-        function chpwd() {lsi ././}
+        . ~/.fet/function/cd.zsh $_fet_var_quickaccess_pathes[$_fet_quickaccess_name]
         break
       elif [ -f $_fet_var_quickaccess_pathes[$_fet_quickaccess_name] ]; then
         . ~/.fet/function/execute.zsh $_fet_var_quickaccess_pathes[$_fet_quickaccess_name]
