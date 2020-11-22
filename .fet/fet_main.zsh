@@ -81,7 +81,7 @@ do # -------------ループ開始------------- #
     fi
     # キーバインドの関数実行
     if [ $_fet_status_yank = '1' ]; then
-      _fet_func_yank
+      . ~/.fet/plugins/file_operation/yank.zsh
     elif [ $_fet_status_paste = '1' ]; then
       _fet_func_paste
     elif [ $_fet_status_delete = '1' ]; then
@@ -97,9 +97,8 @@ do # -------------ループ開始------------- #
     elif [ $_fet_status_shell = '1' ]; then
       _fet_func_shell
     elif [ $_fet_status_description = '1' ]; then
-      _fet_func_description
+      . ~/.fet/function/description.zsh
     elif [ $_fet_status_help = '1' ]; then
-      . ~/.fet/function/fet_help.zsh
     elif [ $_fet_status_mknew = '1' ]; then
       _fet_func_mknew
     elif [ $_fet_status_quickaccess = '1' ]; then
@@ -150,14 +149,6 @@ function _fet_func_destruction() {
   unset _fet_path_previous_dirs
   unset _fet_path_following_dirs
   unset _fet_var_yank_content
-}
-
-# ファイルヤンク
-function _fet_func_yank() {
-  echo '0' >| ~/.fet/.status/.yank.status
-  _fet_var_yank_content=$PWD/$_fet_path_selected_path
-  echo $PWD/$_fet_path_selected_path | win32yank.exe -i
-  echo "yank complete $_fet_var_yank_content"
 }
 
 # ファイルペースト
@@ -213,25 +204,6 @@ function _fet_func_shell() {
   function chpwd() {}
   eval "$_fet_var_cmd"
   function chpwd() {lsi ././}
-}
-
-# mkdiriの関数
-function _fet_func_description() {
-  echo '0' >| ~/.fet/.status/.description.status
-  if (test -d $_fet_path_selected_path); then
-    vim "$_fet_path_selected_path/.description.lsi"
-  else;
-    if [ -e "$PWD/.file_description.lsi" ]; then
-      local _fet_var_exist_file_desc=$(cat "$PWD/.file_description.lsi" | grep "^\\\\/$_fet_path_selected_path")
-      if [ -n "$_exist_file_desc" ]; then
-      else;
-        mkdiri -f "$PWD/$_fet_path_selected_path" "DESCRIPTION"
-      fi
-    else;
-      mkdiri -f "$PWD/$_fet_path_selected_path" "DESCRIPTION"
-    fi
-    vim "$PWD/.file_description.lsi" -c /$_fet_path_selected_path
-  fi
 }
 
 # 新しくファイルかディレクトリを作る
