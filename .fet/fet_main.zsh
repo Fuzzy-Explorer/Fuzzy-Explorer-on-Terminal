@@ -115,12 +115,13 @@ do
     ## Plugins status
     for var in $_fet_plugins_status_list
     do
-      var_sed=$(echo $var | sed 's:/:_:')
+      local var_sed=$(echo $var | sed 's:/:_:')
+      local var_path=$(echo $var | sed 's:/:/functions/:')
       local _fet_status_$var_sed=$(cat ~/.fet/.status/.$var_sed.status)
       local status_var=_fet_status_$var_sed
       status_var=$(eval echo \"\$$status_var\")
       if [ "$status_var" = '1' ]; then
-        . ~/.fet/plugins/$var.zsh
+        . ~/.fet/plugins/$var_path.zsh
         _fet_status_no_key='no'
       fi
     done
