@@ -15,8 +15,8 @@ alt-y:execute-silent(echo 1 >| ~/.fet/.status/.file_operation_yank.status)+accep
 alt-p:execute-silent(echo 1 >| ~/.fet/.status/.file_operation_paste.status)+abort
 DEL:execute-silent(echo 1 >| ~/.fet/.status/.file_operation_delete.status)+accept
 alt-o:execute-silent(echo 1 >| ~/.fet/.status/.file_operation_openwith.status)+accept
-alt-u:execute-silent(echo 1 >| ~/.fet/.status/.undocd.status)+abort
-alt-r:execute-silent(echo 1 >| ~/.fet/.status/.redocd.status)+abort
+alt-u:execute-silent(echo 1 >| ~/.fet/.status/.functions_undocd.status)+abort
+alt-r:execute-silent(echo 1 >| ~/.fet/.status/.functions_redocd.status)+abort
 alt-s:execute-silent(echo 1 >| ~/.fet/.status/.magic_shell.status)+abort
 alt-a:execute(echo >> ~/.fet/.status/.hidden.status)+abort
 alt-d:execute(echo 1 >| ~/.fet/.status/.description.status)+accept

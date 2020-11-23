@@ -1,0 +1,23 @@
+# settings
+shell:zsh
+shell:bash
+type:keybind
+
+# setfunc
+## delete
+setfunc:file_operation/delete:execute-silent(echo 1 >| ~/.fet/.status/.file_operation_delete.status)+accept
+
+## mknew
+setfunc:file_operation/mknew:execute(echo 1 >| ~/.fet/.status/.file_operation_mknew.status)+abort
+
+## openwith
+setfunc:file_operation/openwith:execute-silent(echo 1 >| ~/.fet/.status/.file_operation_openwith.status)+accept
+
+## paste
+setfunc:file_operation/paste:execute-silent(echo 1 >| ~/.fet/.status/.file_operation_paste.status)+abort
+
+## rename
+setfunc:file_operation/rename:execute(echo 1 >| ~/.fet/.status/.file_operation_rename.status)+accept
+
+## yank
+setfunc:file_operation/yank:execute-silent(echo 1 >| ~/.fet/.status/.file_operation_yank.status)+accept

@@ -1,0 +1,8 @@
+# settings
+shell:zsh
+shell:bash
+type:keybind
+
+# setfunc
+setfunc:quickaccess/quickaccess:execute(echo 1 >| ~/.fet/.status/.quickaccess_quickaccess.status)+abort
+setfhnc:quickaccess/register_quickaccess:execute(echo 1 >| ~/.fet/.status/.quickaccess_register_quickaccess.status)+accept

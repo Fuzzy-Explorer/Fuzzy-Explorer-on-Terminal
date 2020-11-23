@@ -1,9 +1,18 @@
 #!/bin/zsh
 setopt +o nomatch
-# ↓ここに実装する機能の名前を列挙する（forでステータス変数／ファイルが作成される）
+# Function全部読み込み
 local _fet_general_status_list=(endloop goup)
-local _fet_function_status_list=(undocd redocd description help goto)
-local _fet_plugins_status_list=(file_operation/yank file_operation/paste file_operation/delete file_operation/openwith file_operation/rename file_operation/mknew magic/shell quickaccess/quickaccess quickaccess/register_quickaccess)
+local _fet_function_status_list=($(cat ~/.fet/function/init.fet | grep "^setfunc" | cut -f 2 -d ':'))
+local _fet_plugins_status_list=()
+local _fet_plugins_name_list=($(ls ~/.fet/plugins))
+for plugin in $_fet_plugins_name_list
+do
+  local plugin_init="$HOME/.fet/plugins/$plugin/init.fet"
+  if [ -f "$plugin_init" ]; then
+    _fet_plugins_status_list+=($(cat $plugin_init | grep "^setfunc" | cut -f 2 -d ':'))
+  fi
+done
+
 # ステータスファイル初期化
 for var in $_fet_general_status_list
 do
@@ -11,6 +20,7 @@ do
 done
 for var in $_fet_function_status_list
 do
+  var=$(echo $var | sed 's:/:_:')
   echo '0' >| ~/.fet/.status/.$var.status
 done
 for var in $_fet_plugins_status_list
@@ -41,6 +51,7 @@ while :
 do
   # 隠しディレクトリ表示の判定
   local _fet_status_hidden=$(( $(cat ~/.fet/.status/.hidden.status | wc -l) % 2 ))
+
   # ディレクトリ一覧の取得
   if [ $_fet_status_hidden -eq 1 ]; then
     local _fet_path_path_list="../\n`lsi`"
@@ -103,11 +114,13 @@ do
     ## Function status
     for var in $_fet_function_status_list
     do
-      local _fet_status_$var=$(cat ~/.fet/.status/.$var.status)
-      local status_var=_fet_status_$var
+      local var_sed=$(echo $var | sed 's:/:_:')
+      local var_path=$var
+      local _fet_status_$var_sed=$(cat ~/.fet/.status/.$var_sed.status)
+      local status_var=_fet_status_$var_sed
       status_var=$(eval echo \"\$$status_var\")
       if [ "$status_var" = '1' ]; then
-        . ~/.fet/function/$var.zsh
+        . ~/.fet/function/$var_path.zsh
         _fet_status_no_key='no'
       fi
     done
