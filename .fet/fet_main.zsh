@@ -2,16 +2,52 @@
 setopt +o nomatch
 # Function全部読み込み
 local _fet_general_status_list=(endloop goup)
-local _fet_function_status_list=($(cat ~/.fet/function/init.fet | grep "^setfunc" | cut -f 2 -d ':'))
+local _fet_function_status_list=()
 local _fet_plugins_status_list=()
 local _fet_plugins_name_list=($(ls ~/.fet/plugins))
+local -A _fet_func_keybind_dict=()
+IFS=$'\n'
+local function_init="$HOME/.fet/function/init.fet"
+if [ -f "$function_init" ]; then
+  for setfunc in $(cat $function_init | grep "^setfunc")
+  do
+    local _setfunc_func=$(echo $setfunc | cut -f 2 -d ':')
+    local _setfunc_keybind=$(echo $setfunc | cut -f 3 -d ':')
+    if [ -n $(echo $_setfunc_keybind | grep "^setfunc-nostatus") ]; then
+    else
+      _fet_function_status_list+=($_setfunc_func)
+    fi
+    _fet_func_keybind_dict["$_setfunc_func"]=$_setfunc_keybind
+  done
+fi
 for plugin in $_fet_plugins_name_list
 do
   local plugin_init="$HOME/.fet/plugins/$plugin/init.fet"
   if [ -f "$plugin_init" ]; then
-    _fet_plugins_status_list+=($(cat $plugin_init | grep "^setfunc" | cut -f 2 -d ':'))
+    for setfunc in $(cat $plugin_init | grep "^setfunc")
+    do
+      local _setfunc_func=$(echo $setfunc | cut -f 2 -d ':')
+      local _setfunc_keybind=$(echo $setfunc | cut -f 3 -d ':')
+      _fet_plugins_status_list+=($_setfunc_func)
+      _fet_func_keybind_dict["$_setfunc_func"]=$_setfunc_keybind
+    done
   fi
 done
+
+IFS=$' '
+# .fetrc読み込み
+local _fetrc=$(cat ~/.fetrc)
+## keybinding
+local _fet_var_keybindings='ESC:execute-silent(echo 1 >| ~/.fet/.status/.endloop.status)+abort'
+local _fetrc_bindkeys=($(echo $_fetrc | grep "^bindkey" | tr '\n' ' '))
+for _fetrc_bindkey in $_fetrc_bindkeys
+do
+  local _fetrc_key=$(echo $_fetrc_bindkey | cut -f 2 -d ':')
+  local _fetrc_func=$(echo $_fetrc_bindkey | cut -f 3 -d ':')
+  _fetrc_func=$_fet_func_keybind_dict["$_fetrc_func"]
+  _fet_var_keybindings=$_fet_var_keybindings,$_fetrc_key:$_fetrc_func
+done
+IFS=$'\n'
 
 # ステータスファイル初期化
 for var in $_fet_general_status_list
@@ -34,7 +70,6 @@ echo >| ~/.fet/.status/.hidden.status
 _fet_status_yank_content=''
 _fet_path_previous_dirs=()
 _fet_path_following_dirs=()
-local _fet_var_keybindings=$(cat ~/.fet/keybindings.setting | tr '\n' ',' | sed 's/,$//')
 
 # 引数を調べる
 if [ $# -gt 0 ]; then
@@ -120,6 +155,7 @@ do
       local status_var=_fet_status_$var_sed
       status_var=$(eval echo \"\$$status_var\")
       if [ "$status_var" = '1' ]; then
+        echo '0' >| ~/.fet/.status/.$var_sed.status
         . ~/.fet/function/$var_path.zsh
         _fet_status_no_key='no'
       fi
@@ -134,6 +170,7 @@ do
       local status_var=_fet_status_$var_sed
       status_var=$(eval echo \"\$$status_var\")
       if [ "$status_var" = '1' ]; then
+        echo '0' >| ~/.fet/.status/.$var_sed.status
         . ~/.fet/plugins/$var_path.zsh
         _fet_status_no_key='no'
       fi
@@ -154,24 +191,3 @@ done
 . ~/.fet/function/destruction.zsh
 lsi ././
 
-# ウィンドウズのディレクトリへのショートカット
-# alias win='_fet_func_windows_shortcut'
-# function _fet_func_windows_shortcut() {
-#   local dir=""
-#   local -A pathes=()
-#   IFS=$'\n'
-#   for _dict in `cat ~/.fet/windows_shortcut.setting`
-#   do
-#     local _key=$(echo $_dict | awk -F", *" '{print $1}' )
-#     local _value=$(echo $_dict | awk -F", *" '{print $2}' )
-#     pathes[$_key]=$_value
-#   done
-#   for key in ${(k)pathes}; do
-#     dir="$key\n$dir"
-#   done
-#   dir=$(echo $dir |fzf +m --prompt="Dir > ")
-#   if [ -n "$dir" ]; then
-#     cd $pathes[$dir]
-#   fi
-# }
-#

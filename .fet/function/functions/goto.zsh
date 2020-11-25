@@ -1,5 +1,5 @@
 #!/bin/zsh
-echo '0' >| ~/.fet/.status/.functions_goto.status
+# echo '0' >| ~/.fet/.status/.functions_goto.status
 echo 'Please write Path or drag file/directory from Windows Explorer.'
 local input_path=''
 trap 'return' SIGINT

@@ -1,5 +1,5 @@
 #!/bin/zsh
-echo '0' >| ~/.fet/.status/.file_operation_rename.status
+# echo '0' >| ~/.fet/.status/.file_operation_rename.status
 echo "please write new name of '$_fet_path_selected_path'"
 local input_newname=$_fet_path_selected_path;
 trap 'return' SIGINT

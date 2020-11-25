@@ -1,0 +1,37 @@
+# keybindings
+## Basic
+bindkey:ctrl-c:functions/endloop
+bindkey:alt-c:functions/endloop
+bindkey:ESC:functions/endloop
+bindkey:alt-h:functions/goup
+bindkey:alt-j:functions/down
+bindkey:alt-k:functions/up
+bindkey:alt-l:functions/accept
+bindkey:alt-i:functions/toggle-preview
+bindkey:alt-a:functions/hidden
+
+## function
+bindkey:alt-u:functions/undocd
+bindkey:alt-r:functions/redocd
+bindkey:alt-g:functions/goto
+bindkey:alt-d:functions/description
+bindkey:alt-/:functions/help
+
+## file_operation
+bindkey:DEL:file_operation/delete
+bindkey:alt-m:file_operation/mknew
+bindkey:alt-o:file_operation/openwith
+bindkey:alt-p:file_operation/paste
+bindkey:alt-n:file_operation/rename
+bindkey:alt-y:file_operation/yank
+
+## magic
+bindkey:alt-s:magic/shell
+
+## quickaccess
+bindkey:alt-q:quickaccess/quickaccess
+bindkey:alt-f:quickaccess/register_quickaccess
+
+## windows
+bindkey:alt-e:windows_extension/windows_explorer
+bindkey:alt-w:windows_extension/windows_jump

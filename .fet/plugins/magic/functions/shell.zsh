@@ -1,5 +1,5 @@
 #!/bin/zsh
-echo '0' >| ~/.fet/.status/.magic_shell.status
+# echo '0' >| ~/.fet/.status/.magic_shell.status
 echo 'please write command...'
 local _fet_var_cmd='';
 trap 'return' SIGINT

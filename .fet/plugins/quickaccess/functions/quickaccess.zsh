@@ -1,5 +1,5 @@
 #!/bin/zsh
-echo '0' >| ~/.fet/.status/.quickaccess_quickaccess.status
+# echo '0' >| ~/.fet/.status/.quickaccess_quickaccess.status
 echo '0' >| ~/.fet/.status/.quickaccess_delete_quickaccess.status
 while :
 do

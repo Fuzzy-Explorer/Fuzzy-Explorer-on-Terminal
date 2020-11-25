@@ -1,5 +1,5 @@
 #!/bin/zsh
-echo '0' >| ~/.fet/.status/.quickaccess_delete_quickaccess.status
+# echo '0' >| ~/.fet/.status/.quickaccess_delete_quickaccess.status
 local -A pathes=()
 IFS=$'\n'
 for _dict in `cat ~/.fet/user/data/quickaccess.csv`

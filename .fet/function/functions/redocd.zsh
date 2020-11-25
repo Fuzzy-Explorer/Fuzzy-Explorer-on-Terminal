@@ -1,5 +1,5 @@
 #!/bin/zsh
-echo '0' >| ~/.fet/.status/.functions_redocd.status
+# echo '0' >| ~/.fet/.status/.functions_redocd.status
 local following_dirs_num="${#_fet_path_following_dirs[@]}"
 if [ $following_dirs_num -gt 0 ]; then
   _fet_path_selected_path=${_fet_path_following_dirs[$following_dirs_num]}
