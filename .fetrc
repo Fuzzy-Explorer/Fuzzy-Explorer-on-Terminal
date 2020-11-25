@@ -7,8 +7,16 @@ bindkey:alt-h:functions/goup
 bindkey:alt-j:functions/down
 bindkey:alt-k:functions/up
 bindkey:alt-l:functions/accept
-bindkey:alt-i:functions/toggle-preview
+bindkey:left:functions/goup
+bindkey:down:functions/down
+bindkey:up:functions/up
+bindkey:right:functions/accept
 bindkey:alt-a:functions/hidden
+
+## Preview
+bindkey:alt-i:functions/toggle-preview
+bindkey:ctrl-j:functions/preview-down
+bindkey:ctrl-k:functions/preview-up
 
 ## function
 bindkey:alt-u:functions/undocd
