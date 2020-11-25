@@ -13,7 +13,7 @@ if [ -f "$function_init" ]; then
   do
     local _setfunc_func=$(echo $setfunc | cut -f 2 -d ':')
     local _setfunc_keybind=$(echo $setfunc | cut -f 3 -d ':')
-    if [ -n $(echo $_setfunc_keybind | grep "^setfunc-nostatus") ]; then
+    if [ -n "$(echo $setfunc | grep "^setfunc-nostatus")" ]; then
     else
       _fet_function_status_list+=($_setfunc_func)
     fi

@@ -3,7 +3,7 @@ shell:zsh
 shell:bash
 
 # setfunc
-setfunc:functions/undocd:execute-silent(echo 1 >| ~/.fet/.status/.undocd.status)+abort
+setfunc:functions/undocd:execute-silent(echo 1 >| ~/.fet/.status/.functions_undocd.status)+abort
 setfunc:functions/redocd:execute-silent(echo 1 >| ~/.fet/.status/.redocd.status)+abort
 setfunc:functions/goto:execute(echo 1 >| ~/.fet/.status/.goto.status)+abort
 setfunc:functions/description:execute(echo 1 >| ~/.fet/.status/.description.status)+accept
