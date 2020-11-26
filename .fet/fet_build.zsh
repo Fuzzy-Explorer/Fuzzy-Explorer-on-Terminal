@@ -58,6 +58,12 @@ do
   echo $config_infobar_func >> ~/.fet/user/build/infobar_func.fet
 done
 
+# 存在しないパスを解決する
+if [ -d "~/.fet/user/data" ]; then
+else
+  mkdir ~/.fet/user/data
+fi
+
 echo $_fet_function_status_list >| ~/.fet/user/build/function_status_list.fet
 echo $_fet_plugins_status_list >| ~/.fet/user/build/plugins_status_list.fet
 echo $_fet_var_keybindings >| ~/.fet/user/build/keybindings.fet
