@@ -20,7 +20,6 @@ fi
 _fet_function_status_list=($(cat ~/.fet/user/build/function_status_list.fet))
 _fet_plugins_status_list=($(cat ~/.fet/user/build/plugins_status_list.fet))
 _fet_var_keybindings=$(cat ~/.fet/user/build/keybindings.fet)
-_fet_var_fzf_options=$(cat ~/.fet/user/build/fzf_view_options.fet)
 IFS=$'\n'
 
 # ステータスファイル初期化
