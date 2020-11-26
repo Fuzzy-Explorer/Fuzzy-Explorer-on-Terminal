@@ -6,7 +6,6 @@ if [ -n "$_fet_var_is_git_dir" ]; then
   local _fet_var_git_status=''
   local _fet_var_git_diff_committed=$(echo $(git log origin/$_fet_var_git_current_branch...$_fet_var_git_current_branch | grep "^commit" | wc -l))
   if [ $_fet_var_git_diff_committed -gt 0 ]; then
-    # _fet_var_git_status=$_fet_var_git_status'\033[1;32m\uf148'"$_fet_var_git_diff_committed"'\033[0m'
     _fet_var_git_status=$_fet_var_git_status"$_fet_colorcode_green"'\uf148'"$_fet_var_git_diff_committed""$_fet_colorcode_end"
   fi
   if [ -n "$_fet_var_git_diff" ]; then
@@ -14,15 +13,12 @@ if [ -n "$_fet_var_is_git_dir" ]; then
     local _fet_var_git_diff_mod=$(echo $_fet_var_git_diff | grep -e "^ M" -e "^ D" | wc -l)
     local _fet_var_git_diff_added=$(echo $_fet_var_git_diff | grep -e "^M " -e "^D "| wc -l)
     if [ $_fet_var_git_diff_added -gt 0 ]; then
-      # _fet_var_git_status=$_fet_var_git_status'\033[1;32m+'"$_fet_var_git_diff_added"'\033[0m'
       _fet_var_git_status=$_fet_var_git_status"$_fet_colorcode_green"+"$_fet_var_git_diff_added""$_fet_colorcode_end"
     fi
     if [ $_fet_var_git_diff_mod -gt 0 ]; then
-      # _fet_var_git_status=$_fet_var_git_status'\033[1;33m!'"$_fet_var_git_diff_mod"'\033[0m'
       _fet_var_git_status=$_fet_var_git_status"$_fet_colorcode_yellow"!"$_fet_var_git_diff_mod""$_fet_colorcode_end"
     fi
     if [ $_fet_var_git_diff_untrack -gt 0 ]; then
-      # _fet_var_git_status=$_fet_var_git_status'\033[1;31m?'"$_fet_var_git_diff_untrack"'\033[0m'
       _fet_var_git_status=$_fet_var_git_status"$_fet_colorcode_red"?"$_fet_var_git_diff_untrack""$_fet_colorcode_end"
     fi
   fi
