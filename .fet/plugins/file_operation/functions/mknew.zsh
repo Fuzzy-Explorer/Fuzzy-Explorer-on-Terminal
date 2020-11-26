@@ -1,5 +1,4 @@
 #!/bin/zsh
-# echo '0' >| ~/.fet/.status/.file_operation_mknew.status
 echo "Make dir or file.\nPlease write new dir or file name. (If last char is /, make dir.)"
 local input_new_mkname=''
 trap 'return' SIGINT

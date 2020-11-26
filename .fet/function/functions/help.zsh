@@ -1,5 +1,4 @@
 #!/bin/zsh
-# echo '0' >| ~/.fet/.status/.functions_help.status
 which richcat
 if [ "`which richcat`" = "richcat not found" ]; then
   cat ~/.fet/ReadMe.md | fzf --height=80% --ansi --bind "alt-h:abort,alt-j:down,alt-k:up,alt-l:abort,alt-c:abort,ESC:abort"

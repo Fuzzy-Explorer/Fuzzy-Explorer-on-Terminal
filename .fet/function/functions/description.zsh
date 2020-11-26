@@ -1,5 +1,4 @@
 #!/bin/zsh
-# echo '0' >| ~/.fet/.status/.functions_description.status
 if (test -d $_fet_path_selected_path); then
   vim "$_fet_path_selected_path/.description.lsi"
 else;

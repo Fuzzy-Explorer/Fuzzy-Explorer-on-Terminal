@@ -1,4 +1,4 @@
-# echo 0 >| ~/.fet/.status/.windows_extension_windows_jump.status
+#!/bin/zsh
 local dir=""
 local -A pathes=()
 IFS=$'\n'
@@ -11,7 +11,8 @@ done
 for key in ${(k)pathes}; do
   dir="$key\n$dir"
 done
-dir=$(echo $dir |fzf +m --prompt="Dir > ")
+dir=$(echo $dir | grep -v '^\s*$')
+dir=$(echo $dir |fzf +m --cycle --prompt="Windows Jump > " --bind 'alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,ESC:abort')
 if [ -n "$dir" ]; then
   cd $pathes[$dir]
 fi

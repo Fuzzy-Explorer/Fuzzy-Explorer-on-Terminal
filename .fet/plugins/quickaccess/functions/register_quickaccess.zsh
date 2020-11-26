@@ -1,5 +1,4 @@
 #!/bin/zsh
-# echo '0' >| ~/.fet/.status/.quickaccess_register_quickaccess.status
 echo 'Please write name of this quickaccess.'
 local input_qaname=$_fet_path_selected_path
 trap 'return' SIGINT
