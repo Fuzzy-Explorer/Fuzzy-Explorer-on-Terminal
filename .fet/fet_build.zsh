@@ -61,3 +61,5 @@ done
 echo $_fet_function_status_list >| ~/.fet/user/build/function_status_list.fet
 echo $_fet_plugins_status_list >| ~/.fet/user/build/plugins_status_list.fet
 echo $_fet_var_keybindings >| ~/.fet/user/build/keybindings.fet
+
+echo "build successfully!"

@@ -12,8 +12,10 @@ if [ -f "$HOME/.fet/user/build/plugins_status_list.fet" ]; then
 else
 if [ -f "$HOME/.fet/user/build/keybindings.fet" ]; then
 else
-  echo "please execute 'fet build'."
-  return
+if [ -f "$HOME/.fet/user/build/infobar_func.fet" ]; then
+else
+  . ~/.fet/fet_build.zsh
+fi
 fi
 fi
 fi
