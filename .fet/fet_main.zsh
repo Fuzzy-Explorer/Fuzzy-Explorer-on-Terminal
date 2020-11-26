@@ -8,16 +8,19 @@ local _fet_plugins_status_list=()
 IFS=$' '
 if [ -f "$HOME/.fet/user/build/function_status_list.fet" ]; then
 else
+  . ~/.fet/fet_build.zsh
+fi
 if [ -f "$HOME/.fet/user/build/plugins_status_list.fet" ]; then
-else
-if [ -f "$HOME/.fet/user/build/keybindings.fet" ]; then
-else
-if [ -f "$HOME/.fet/user/build/infobar_func.fet" ]; then
 else
   . ~/.fet/fet_build.zsh
 fi
+if [ -f "$HOME/.fet/user/build/keybindings.fet" ]; then
+else
+  . ~/.fet/fet_build.zsh
 fi
-fi
+if [ -f "$HOME/.fet/user/build/infobar_func.fet" ]; then
+else
+  . ~/.fet/fet_build.zsh
 fi
 _fet_function_status_list=($(cat ~/.fet/user/build/function_status_list.fet))
 _fet_plugins_status_list=($(cat ~/.fet/user/build/plugins_status_list.fet))
