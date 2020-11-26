@@ -1,8 +1,11 @@
 #!/bin/zsh
-echo 'Please write Path or drag file/directory from Windows Explorer.'
+echo "$_fet_colorcode_yellow"'Please write Path'"$_fet_colorcode_end"
+if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
+  echo '(or drag file/directory from Windows Explorer.)\n'
+fi
 local input_path=''
 trap 'return' SIGINT
-vared input_path
+vared -p "GOTO PATH > " input_path
 local ubuntu_path=$(eval "echo $input_path")
 if [ -d "$ubuntu_path" ]; then
   . ~/.fet/function/cd.zsh "$ubuntu_path"

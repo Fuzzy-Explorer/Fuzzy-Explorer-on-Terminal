@@ -1,8 +1,8 @@
 #!/bin/zsh
-echo 'please write command...'
+echo "$_fet_colorcode_yellow"'Please write command...'"$_fet_colorcode_end"
 local _fet_var_cmd='';
 trap 'return' SIGINT
-vared _fet_var_cmd;
+vared -p "cmd > " _fet_var_cmd;
 _fet_path_previous_dirs+=($PWD)
 _fet_path_following_dirs=()
 function chpwd() {}

@@ -1,8 +1,8 @@
 #!/bin/zsh
-echo 'Please write name of this quickaccess.'
+echo "$_fet_colorcode_yellow"'Please write name of this quickaccess.'"$_fet_colorcode_end"
 local input_qaname=$_fet_path_selected_path
 trap 'return' SIGINT
-vared input_qaname
+vared -p "QA NAME > " input_qaname
 input_qaname=$(echo $input_qaname | sed 's/,/_/' | sed 's/\t/ /')
 local -A pathes=()
 IFS=$'\n'
