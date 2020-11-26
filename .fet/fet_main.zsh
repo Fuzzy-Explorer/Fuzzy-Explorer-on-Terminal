@@ -47,6 +47,11 @@ local _fet_plugins_status_list=()
 #   _fetrc_func=$_fet_func_keybind_dict["$_fetrc_func"]
 #   _fet_var_keybindings=$_fet_var_keybindings,$_fetrc_key:$_fetrc_func
 # done
+
+IFS=$' '
+_fet_function_status_list=($(cat ~/.fet/user/build/function_status_list.fet))
+_fet_plugins_status_list=($(cat ~/.fet/user/build/plugins_status_list.fet))
+_fet_var_keybindings=$(cat ~/.fet/user/build/keybindings.fet)
 IFS=$'\n'
 
 # ステータスファイル初期化
