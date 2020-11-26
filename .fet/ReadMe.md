@@ -38,11 +38,16 @@ Delete           :    Delete
 Open with        :    alt-o
 reName           :    alt-n
 Mk new file/dir  :    alt-m
+Description      :    alt-d
 ```
 
-## Apps
+## Windows Jump
 ```
+windows Jump     :    alt-w
 windows Explorer :    alt-e
-Description      :    alt-d
+```
+
+## Magic
+```
 Shell            :    alt-s
 ```
