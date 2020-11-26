@@ -1,3 +1,6 @@
+# fzf setting
+infobar:git_infobar/git_infobar
+
 # keybindings
 ## Basic
 bindkey:ctrl-c:functions/endloop

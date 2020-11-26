@@ -48,6 +48,15 @@ do
   config_func=$_fet_func_keybind_dict["$config_func"]
   _fet_var_keybindings=$_fet_var_keybindings,$config_key:$config_func
 done
+## infobar
+echo >| ~/.fet/user/build/infobar_func.fet
+local config_infobars=($(echo $config | grep "^infobar" | tr '\n' ' '))
+local config_infobar_func=''
+for config_infobar in $config_infobars
+do
+  config_infobar_func=$(echo $config_infobar | cut -f 2 -d ':' | sed 's:/:/functions/:')
+  echo $config_infobar_func >> ~/.fet/user/build/infobar_func.fet
+done
 
 echo $_fet_function_status_list >| ~/.fet/user/build/function_status_list.fet
 echo $_fet_plugins_status_list >| ~/.fet/user/build/plugins_status_list.fet

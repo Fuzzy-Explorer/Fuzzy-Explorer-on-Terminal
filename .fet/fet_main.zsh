@@ -4,54 +4,23 @@ setopt +o nomatch
 local _fet_general_status_list=(endloop goup)
 local _fet_function_status_list=()
 local _fet_plugins_status_list=()
-# local _fet_plugins_name_list=($(ls ~/.fet/plugins))
-# local -A _fet_func_keybind_dict=()
-# IFS=$'\n'
-# local function_init="$HOME/.fet/function/init.fet"
-# if [ -f "$function_init" ]; then
-#   for setfunc in $(cat $function_init | grep "^setfunc")
-#   do
-#     local _setfunc_func=$(echo $setfunc | cut -f 2 -d ':')
-#     local _setfunc_keybind=$(echo $setfunc | cut -f 3 -d ':')
-#     if [ -n "$(echo $setfunc | grep "^setfunc-nostatus")" ]; then
-#     else
-#       _fet_function_status_list+=($_setfunc_func)
-#     fi
-#     _fet_func_keybind_dict["$_setfunc_func"]=$_setfunc_keybind
-#   done
-# fi
-# for plugin in $_fet_plugins_name_list
-# do
-#   local plugin_init="$HOME/.fet/plugins/$plugin/init.fet"
-#   if [ -f "$plugin_init" ]; then
-#     for setfunc in $(cat $plugin_init | grep "^setfunc")
-#     do
-#       local _setfunc_func=$(echo $setfunc | cut -f 2 -d ':')
-#       local _setfunc_keybind=$(echo $setfunc | cut -f 3 -d ':')
-#       _fet_plugins_status_list+=($_setfunc_func)
-#       _fet_func_keybind_dict["$_setfunc_func"]=$_setfunc_keybind
-#     done
-#   fi
-# done
-#
-# IFS=$' '
-# # .fetrc読み込み
-# local _fetrc=$(cat ~/.fetrc)
-# ## keybinding
-# local _fet_var_keybindings='ESC:execute-silent(echo 1 >| ~/.fet/.status/.endloop.status)+abort'
-# local _fetrc_bindkeys=($(echo $_fetrc | grep "^bindkey" | tr '\n' ' '))
-# for _fetrc_bindkey in $_fetrc_bindkeys
-# do
-#   local _fetrc_key=$(echo $_fetrc_bindkey | cut -f 2 -d ':')
-#   local _fetrc_func=$(echo $_fetrc_bindkey | cut -f 3 -d ':')
-#   _fetrc_func=$_fet_func_keybind_dict["$_fetrc_func"]
-#   _fet_var_keybindings=$_fet_var_keybindings,$_fetrc_key:$_fetrc_func
-# done
 
 IFS=$' '
+if [ -f "$HOME/.fet/user/build/function_status_list.fet" ]; then
+else
+if [ -f "$HOME/.fet/user/build/plugins_status_list.fet" ]; then
+else
+if [ -f "$HOME/.fet/user/build/keybindings.fet" ]; then
+else
+  echo "please execute 'fet build'."
+  return
+fi
+fi
+fi
 _fet_function_status_list=($(cat ~/.fet/user/build/function_status_list.fet))
 _fet_plugins_status_list=($(cat ~/.fet/user/build/plugins_status_list.fet))
 _fet_var_keybindings=$(cat ~/.fet/user/build/keybindings.fet)
+_fet_var_fzf_options=$(cat ~/.fet/user/build/fzf_view_options.fet)
 IFS=$'\n'
 
 # ステータスファイル初期化
@@ -76,14 +45,6 @@ _fet_status_yank_content=''
 _fet_path_previous_dirs=()
 _fet_path_following_dirs=()
 
-# 引数を調べる
-if [ $# -gt 0 ]; then
-  if [ -d "$@" ]; then
-    _fet_path_selected_path="$@"
-    _fet_func_change_directory
-  fi
-fi
-
 # -------------------------------------------------------- #
 # ---------------------- ループ開始 ---------------------- #
 # -------------------------------------------------------- #
@@ -102,36 +63,17 @@ do
   # プロンプト文字列
   local _fet_var_promp=$(echo $PWD | sed -e "s:$HOME:~:")
 
-  # GIT Info bar
-  local _fet_var_is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
-  if [ -n "$_fet_var_is_git_dir" ]; then
-    local _fet_var_git_current_branch=$(echo $(git branch --show-current))
-    local _fet_var_git_diff=$(git status --short)
-    local _fet_var_git_status=''
-    local _fet_var_git_diff_committed=$(echo $(git log origin/$_fet_var_git_current_branch...$_fet_var_git_current_branch | grep "^commit" | wc -l))
-    if [ $_fet_var_git_diff_committed -gt 0 ]; then
-      _fet_var_git_status=$_fet_var_git_status'\033[1;32m\uf148'"$_fet_var_git_diff_committed"'\033[0m'
+  # infobar
+  local _fet_var_infobar=''
+  for infobar_func in `cat ~/.fet/user/build/infobar_func.fet`
+  do
+    if [ -n "$infobar_func" ]; then
+      _fet_var_infobar=$(echo $_fet_var_infobar$(. ~/.fet/plugins/$(echo $infobar_func).zsh)'  ')
     fi
-    if [ -n "$_fet_var_git_diff" ]; then
-      local _fet_var_git_diff_untrack=$(echo $_fet_var_git_diff | grep "^??" | wc -l)
-      local _fet_var_git_diff_mod=$(echo $_fet_var_git_diff | grep -e "^ M" -e "^ D" | wc -l)
-      local _fet_var_git_diff_added=$(echo $_fet_var_git_diff | grep -e "^M " -e "^D "| wc -l)
-      if [ $_fet_var_git_diff_added -gt 0 ]; then
-        _fet_var_git_status=$_fet_var_git_status'\033[1;32m+'"$_fet_var_git_diff_added"'\033[0m'
-      fi
-      if [ $_fet_var_git_diff_mod -gt 0 ]; then
-        _fet_var_git_status=$_fet_var_git_status'\033[1;33m!'"$_fet_var_git_diff_mod"'\033[0m'
-      fi
-      if [ $_fet_var_git_diff_untrack -gt 0 ]; then
-        _fet_var_git_status=$_fet_var_git_status'\033[1;31m?'"$_fet_var_git_diff_untrack"'\033[0m'
-      fi
-    fi
-    _fet_var_git_current_branch=$(echo '\uf1d3'  $_fet_var_git_current_branch $_fet_var_git_status)
-  else
-    _fet_var_git_current_branch=''
-  fi
+  done
+
   # fzfでのディレクトリの選択
-  local _fet_path_selected_path=$(echo $_fet_path_path_list | fzf --height 50% --preview-window right:40% --ansi +m --prompt="$_fet_var_promp >" --cycle --info="inline" --header="$_fet_var_git_current_branch" --bind "$_fet_var_keybindings" --preview="echo {} | cut -f 2 -d ' ' | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then ls -ldhG {a}; batcat {a} --color=always --style=grid --line-range :100; else ls -ldhG {a}; echo; lsi {a}; fi'")
+  local _fet_path_selected_path=$(echo $_fet_path_path_list | fzf +m --ansi --height 90% --cycle --preview-window right:40% --info='inline' --prompt="$_fet_var_promp >" --header="$_fet_var_infobar" --bind "$_fet_var_keybindings" --preview="echo {} | cut -f 2 -d ' ' | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then ls -ldhG {a}; batcat {a} --color=always --style=grid --line-range :100; else ls -ldhG {a}; echo; lsi {a}; fi'")
   _fet_status_endloop=$(cat ~/.fet/.status/.endloop.status)
   # 動作の分岐
   if [ $_fet_status_endloop = '0' ]; then
