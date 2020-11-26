@@ -1,4 +1,6 @@
 #!/bin/zsh
+local _fet_function_status_list=()
+local _fet_plugins_status_list=()
 local _fet_plugins_name_list=($(ls ~/.fet/plugins))
 local -A _fet_func_keybind_dict=()
 local function_init="$HOME/.fet/function/init.fet"
@@ -19,7 +21,7 @@ if [ -f "$function_init" ]; then
   done
 fi
 ## plugins読み込み
-for plugin in $_fet_plugins_name_list
+for plugin in $(echo $_fet_plugins_name_list | tr ' ' '\n')
 do
   local plugin_init="$HOME/.fet/plugins/$plugin/init.fet"
   if [ -f "$plugin_init" ]; then
@@ -34,20 +36,19 @@ do
 done
 
 IFS=$' '
-# .fetrc読み込み
-local _fetrc=$(cat ~/.fetrc)
+# config読み込み
+local config=$(cat ~/.fet/config)
 ## keybinding読み込み
 local _fet_var_keybindings='ESC:execute-silent(echo 1 >| ~/.fet/.status/.endloop.status)+abort'
-local _fetrc_bindkeys=($(echo $_fetrc | grep "^bindkey" | tr '\n' ' '))
-for _fetrc_bindkey in $_fetrc_bindkeys
+local config_bindkeys=($(echo $config | grep "^bindkey" | tr '\n' ' '))
+for config_bindkey in $config_bindkeys
 do
-  local _fetrc_key=$(echo $_fetrc_bindkey | cut -f 2 -d ':')
-  local _fetrc_func=$(echo $_fetrc_bindkey | cut -f 3 -d ':')
-  _fetrc_func=$_fet_func_keybind_dict["$_fetrc_func"]
-  _fet_var_keybindings=$_fet_var_keybindings,$_fetrc_key:$_fetrc_func
+  local config_key=$(echo $config_bindkey | cut -f 2 -d ':')
+  local config_func=$(echo $config_bindkey | cut -f 3 -d ':')
+  config_func=$_fet_func_keybind_dict["$config_func"]
+  _fet_var_keybindings=$_fet_var_keybindings,$config_key:$config_func
 done
 
-# ビルド
 echo $_fet_function_status_list >| ~/.fet/user/build/function_status_list.fet
 echo $_fet_plugins_status_list >| ~/.fet/user/build/plugins_status_list.fet
 echo $_fet_var_keybindings >| ~/.fet/user/build/keybindings.fet
