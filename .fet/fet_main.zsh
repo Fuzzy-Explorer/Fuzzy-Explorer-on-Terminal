@@ -46,6 +46,7 @@ echo >| ~/.fet/.status/.hidden.status
 
 # 変数宣言
 _fet_status_yank_content=''
+_fet_status_cut_content=''
 _fet_path_previous_dirs=()
 _fet_path_following_dirs=()
 

@@ -36,6 +36,7 @@ bindkey:alt-o:file_operation/openwith
 bindkey:alt-p:file_operation/paste
 bindkey:alt-n:file_operation/rename
 bindkey:alt-y:file_operation/yank
+bindkey:alt-x:file_operation/cut
 
 ## magic
 bindkey:alt-s:magic/shell

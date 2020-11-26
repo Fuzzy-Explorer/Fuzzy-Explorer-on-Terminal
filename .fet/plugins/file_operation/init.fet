@@ -21,3 +21,6 @@ setfunc:file_operation/rename:execute(echo 1 >| ~/.fet/.status/.file_operation_r
 
 ## yank
 setfunc:file_operation/yank:execute-silent(echo 1 >| ~/.fet/.status/.file_operation_yank.status)+accept
+
+## cut
+setfunc:file_operation/cut:execute-silent(echo 1 >| ~/.fet/.status/.file_operation_cut.status)+accept
