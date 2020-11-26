@@ -1,8 +1,16 @@
 check_shell=$(readlink /proc/$$/exe | grep bash)
-if [ -n "$check_shell" ]; then
-  ~/.fet/fet_main.bash
+
+if [ "$1" = "build" ]; then
+  if [ -n "$check_shell" ]; then
+    echo bash
+  else
+    . ~/.fet/fet_build.zsh
+  fi
 else
-  # cd $(~/.fet/fet_main.zsh)
-  . ~/.fet/fet_main.zsh
+  if [ -n "$check_shell" ]; then
+    ~/.fet/fet_main.bash
+  else
+    . ~/.fet/fet_main.zsh
+  fi
+  unset check_shell
 fi
-unset check_shell

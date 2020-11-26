@@ -2,7 +2,7 @@
 local dir=""
 local -A pathes=()
 IFS=$'\n'
-for _dict in `cat ~/.fet/windows_shortcut.setting`
+for _dict in `cat ~/.fet/plugins/windows_extension/windows_shortcut.csv`
 do
   local _key=$(echo $_dict | awk -F", *" '{print $1}' )
   local _value=$(echo $_dict | awk -F", *" '{print $2}' )
