@@ -4,10 +4,10 @@ shell:bash
 
 # setfunc
 setfunc:functions/undocd:execute-silent(echo 1 >| ~/.fet/.status/.functions_undocd.status)+abort
-setfunc:functions/redocd:execute-silent(echo 1 >| ~/.fet/.status/.redocd.status)+abort
-setfunc:functions/goto:execute(echo 1 >| ~/.fet/.status/.goto.status)+abort
-setfunc:functions/description:execute(echo 1 >| ~/.fet/.status/.description.status)+accept
-setfunc:functions/help:execute(echo 1 >| ~/.fet/.status/.help.status)+abort
+setfunc:functions/redocd:execute-silent(echo 1 >| ~/.fet/.status/.functions_redocd.status)+abort
+setfunc:functions/goto:execute(echo 1 >| ~/.fet/.status/.functions_goto.status)+abort
+setfunc:functions/description:execute(echo 1 >| ~/.fet/.status/.functions_description.status)+accept
+setfunc:functions/help:execute(echo 1 >| ~/.fet/.status/.functions_help.status)+abort
 
 ## no status function
 setfunc-nostatus:functions/endloop:execute-silent(echo 1 >| ~/.fet/.status/.endloop.status)+abort
