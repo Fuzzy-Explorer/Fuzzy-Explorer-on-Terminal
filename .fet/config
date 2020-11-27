@@ -16,6 +16,7 @@ bindkey:down:functions/down
 bindkey:up:functions/up
 bindkey:right:functions/accept
 bindkey:alt-a:functions/hidden
+beautiful-preview:alt-b
 
 ## Preview
 bindkey:alt-i:functions/toggle-preview

@@ -78,6 +78,7 @@ do
   done
 
   # fzfでのディレクトリの選択
+  echo "$_fet_var_keybindings"
   local _fet_path_selected_path=$(echo $_fet_path_path_list | fzf +m --ansi --height 70% --cycle --preview-window right:40% --info='inline' --layout=reverse --border --prompt="$_fet_var_promp >" --header="$_fet_var_infobar" --bind "$_fet_var_keybindings" --preview="echo {} | cut -f 2 -d ' ' | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then ls -ldhG {a}; batcat {a} --color=always --style=grid --line-range :100; else ls -ldhG {a}; echo; lsi {a}; fi'")
   _fet_status_endloop=$(cat ~/.fet/.status/.endloop.status)
   # 動作の分岐

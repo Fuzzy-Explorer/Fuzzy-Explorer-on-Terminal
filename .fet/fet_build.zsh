@@ -48,6 +48,13 @@ do
   config_func=$_fet_func_keybind_dict["$config_func"]
   _fet_var_keybindings=$_fet_var_keybindings,$config_key:$config_func
 done
+## beautiful preview
+local beautiful_preview=($(echo $config | grep "^beautiful-preview" | tr '\n' ' '))
+if [ -n "$beautiful_preview" ]; then
+  local config_key=$(echo $beautiful_preview | cut -f 2 -d ':')
+  _fet_var_keybindings=$_fet_var_keybindings,$config_key:'preview:echo {} | cut -f 2 -d '\'' '\'' | xargs -rI{a} sh -c '\''if [ -f {a} ]; then ls -ldhG {a}; echo; richcat {a} -w $(echo $(tput cols) \\* 0.37 | bc); else ls -ldhG {a}; echo; lsi {a}; fi'\'
+fi
+
 ## infobar
 echo >| ~/.fet/user/build/infobar_func.fet
 local config_infobars=($(echo $config | grep "^infobar" | tr '\n' ' '))
