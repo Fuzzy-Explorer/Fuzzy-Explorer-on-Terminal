@@ -8,22 +8,22 @@ IFS=$' '
 if [ -f "$HOME/.fet/user/build/function_status_list.fet" ]; then
   :
 else
-  . ~/.fet/fet_build.zsh
+  . ~/.fet/fet_build.bash
 fi
 if [ -f "$HOME/.fet/user/build/plugins_status_list.fet" ]; then
   :
 else
-  . ~/.fet/fet_build.zsh
+  . ~/.fet/fet_build.bash
 fi
 if [ -f "$HOME/.fet/user/build/keybindings.fet" ]; then
   :
 else
-  . ~/.fet/fet_build.zsh
+  . ~/.fet/fet_build.bash
 fi
 if [ -f "$HOME/.fet/user/build/infobar_func.fet" ]; then
   :
 else
-  . ~/.fet/fet_build.zsh
+  . ~/.fet/fet_build.bash
 fi
 _fet_function_status_list=($(cat ~/.fet/user/build/function_status_list.fet))
 _fet_plugins_status_list=($(cat ~/.fet/user/build/plugins_status_list.fet))
@@ -39,7 +39,7 @@ _fet_function_status_sed=()
 _fet_function_status_path=()
 for var in $_fet_function_status_list
 do
-  _fet_function_status_path+=($(echo $var | sed 's:/:/zsh/:'))
+  _fet_function_status_path+=($(echo $var | sed 's:/:/bash/:'))
   var=$(echo $var | sed 's:/:_:')
   _fet_function_status_sed+=("$var")
   echo '0' >| ~/.fet/.status/.$var.status
@@ -48,7 +48,7 @@ _fet_plugins_status_sed=()
 _fet_plugins_status_path=()
 for var in $_fet_plugins_status_list
 do
-  _fet_plugins_status_path+=($(echo $var | sed 's:/:/zsh/:'))
+  _fet_plugins_status_path+=($(echo $var | sed 's:/:/bash/:'))
   var=$(echo $var | sed 's:/:_:')
   _fet_plugins_status_sed+=("$var")
   echo '0' >| ~/.fet/.status/.$var.status
@@ -84,12 +84,12 @@ do
   for infobar_func in `cat ~/.fet/user/build/infobar_func.fet`
   do
     if [ -n "$infobar_func" ]; then
-      _fet_var_infobar=$(echo $_fet_var_infobar$(. ~/.fet/plugins/$(echo $infobar_func).zsh)'  ')
+      _fet_var_infobar=$(echo $_fet_var_infobar$(. ~/.fet/plugins/$(echo $infobar_func).bash)'  ')
     fi
   done
 
   # fzfでのディレクトリの選択
-  _fet_path_selected_path=$(echo $_fet_path_path_list | fzf +m --ansi --height 70% --cycle --preview-window right:40% --info='inline' --layout=reverse --border --prompt="$_fet_var_promp >" --header="$_fet_var_infobar" --bind "$_fet_var_keybindings" --preview="echo {} | cut -f 2 -d ' ' | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then ls -ldhG {a}; batcat {a} --color=always --style=grid --line-range :100; else ls -ldhG {a}; echo; lsi {a}; fi'")
+  _fet_path_selected_path=$(echo -e "$_fet_path_path_list" | fzf +m --ansi --height 70% --cycle --preview-window right:40% --info='inline' --layout=reverse --border --prompt="$_fet_var_promp >" --header="$_fet_var_infobar" --bind "$_fet_var_keybindings" --preview="echo {} | cut -f 2 -d ' ' | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then ls -ldhG {a}; batcat {a} --color=always --style=grid --line-range :100; else ls -ldhG {a}; echo; lsi {a}; fi'")
   _fet_status_endloop=$(cat ~/.fet/.status/.endloop.status)
   # 動作の分岐
   if [ $_fet_status_endloop = '0' ]; then
@@ -127,7 +127,7 @@ do
       status_var=$(cat ~/.fet/.status/.$var_sed.status)
       if [ "$status_var" = '1' ]; then
         echo '0' >| ~/.fet/.status/.$var_sed.status
-        . ~/.fet/$var_path.zsh
+        . ~/.fet/$var_path.bash
         _fet_status_no_key='no'
       fi
     done
@@ -143,7 +143,7 @@ do
       status_var=$(cat ~/.fet/.status/.$var_sed.status)
       if [ "$status_var" = '1' ]; then
         echo '0' >| ~/.fet/.status/.$var_sed.status
-        . ~/.fet/plugins/$var_path.zsh
+        . ~/.fet/plugins/$var_path.bash
         _fet_status_no_key='no'
       fi
     done
@@ -151,15 +151,15 @@ do
     ## cd or execute
     if [ $_fet_status_no_key = 'yes' ]; then
       if (test -d $_fet_path_selected_path); then
-        . ~/.fet/function/cd.zsh
+        . ~/.fet/function/cd.bash
       else
-        . ~/.fet/function/execute.zsh
+        . ~/.fet/function/execute.bash
       fi
     fi
   else
     break
   fi
 done
-. ~/.fet/function/destruction.zsh
+. ~/.fet/function/destruction.bash
 lsi ././
 
