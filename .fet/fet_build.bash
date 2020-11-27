@@ -67,10 +67,10 @@ do
 done
 
 # 存在しないパスを解決する
-if [ -d "~/.fet/user/data" ]; then
+if [ -d "$HOME/.fet/user/data" ]; then
   :
 else
-  mkdir ~/.fet/user/data
+  mkdir $HOME/.fet/user/data
 fi
 
 echo $_fet_function_status_list >| ~/.fet/user/build/function_status_list.fet

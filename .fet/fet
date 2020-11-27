@@ -7,7 +7,7 @@ _fet_colorcode_end='\033[0m'
 
 if [ "$1" = "build" ]; then
   if [ -n "$check_shell" ]; then
-    echo bash
+    . ~/.fet/fet_build.bash
   else
     . ~/.fet/fet_build.zsh
   fi
