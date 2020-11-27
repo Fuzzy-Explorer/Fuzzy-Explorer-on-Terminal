@@ -1,0 +1,5 @@
+#!/bin/bash
+unset _fet_path_selected_path
+unset _fet_path_previous_dirs
+unset _fet_path_following_dirs
+unset _fet_var_yank_content

@@ -31,13 +31,13 @@ _fet_var_keybindings=$(cat ~/.fet/user/build/keybindings.fet)
 IFS=$'\n'
 
 # ステータスファイル初期化
-for var in $_fet_general_status_list
+for var in ${_fet_general_status_list[@]}
 do
   echo '0' >| ~/.fet/.status/.$var.status
 done
 _fet_function_status_sed=()
 _fet_function_status_path=()
-for var in $_fet_function_status_list
+for var in ${_fet_function_status_list[@]}
 do
   _fet_function_status_path+=($(echo $var | sed 's:/:/bash/:'))
   var=$(echo $var | sed 's:/:_:')
@@ -46,7 +46,7 @@ do
 done
 _fet_plugins_status_sed=()
 _fet_plugins_status_path=()
-for var in $_fet_plugins_status_list
+for var in ${_fet_plugins_status_list[@]}
 do
   _fet_plugins_status_path+=($(echo $var | sed 's:/:/bash/:'))
   var=$(echo $var | sed 's:/:_:')
@@ -101,9 +101,9 @@ do
     fi
     # 全ステータス読み込み
     ## General status
-    for var in $_fet_general_status_list
+    for var in ${_fet_general_status_list[@]}
     do
-      _fet_status_$var=$(cat ~/.fet/.status/.$var.status)
+      eval _fet_status_$var=$(cat ~/.fet/.status/.$var.status)
     done
     ### 上の階層に移動するかどうか
     if [ -n "$_fet_path_selected_path" ]; then
@@ -117,7 +117,7 @@ do
 
     _fet_status_no_key='yes'
     ## Function status
-    for var in $(seq 1 $(echo ${#_fet_function_status_list[*]}))
+    for var in $(seq 0 $(expr ${#_fet_function_status_list[*]} - 1))
     do
       if [ "$_fet_status_no_key" = "no" ]; then
         break
@@ -133,7 +133,7 @@ do
     done
 
     ## Plugins status
-    for var in $(seq 1 $(echo ${#_fet_plugins_status_list[*]}))
+    for var in $(seq 0 $(expr ${#_fet_plugins_status_list[*]} - 1))
     do
       if [ "$_fet_status_no_key" = "no" ]; then
         break

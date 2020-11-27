@@ -61,7 +61,7 @@ local config_infobars=($(echo $config | grep "^infobar" | tr '\n' ' '))
 local config_infobar_func=''
 for config_infobar in $config_infobars
 do
-  config_infobar_func=$(echo $config_infobar | cut -f 2 -d ':' | sed 's:/:/zsh/:')
+  config_infobar_func=$(echo $config_infobar | cut -f 2 -d ':')
   echo $config_infobar_func >> ~/.fet/user/build/infobar_func.fet
 done
 
