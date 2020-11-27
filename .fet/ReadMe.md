@@ -2,53 +2,54 @@
 
 ## General
 ```
-Decide           :    alt-l or → or Enter
-Cursor Up        :    alt-k or ↑
-Cursor Down      :    alt-j or ↓
-Move Above       :    alt-h or ← or BackSpace
-Cancel           :    alt-c or ctrl-c or ESC
-Help             :    alt-/
+General         / Decide            : alt-l or → or Enter
+General         / Cursor Up         : alt-k or ↑
+General         / Cursor Down       : alt-j or ↓
+General         / Move Above        : alt-h or ← or BackSpace
+General         / Cancel            : alt-c or ctrl-c or ESC
+General         / Help              : alt-/
+```
+
+## View
+```
+View            / show All(toggle)  : alt-a
+View            / view Information  : alt-i
+View            / beautiful preview : alt-b
 ```
 
 ## Change Director
 ```
-Undo cd          :    alt-u
-Redo cd          :    alt-r
-Goto path        :    alt-g
-```
-
-## QuickAccess (QA)
-```
-QuickAccess (QA) :    alt-q
-mk Favorite (QA) :    alt-f
-Delete (QA)      :    Delete (when QA mode)
-```
-
-## View    
-```
-show All(toggle) :    alt-a
-view Information :    alt-i
+Change Director / Undo cd           : alt-u
+Change Director / Redo cd           : alt-r
+Change Director / Goto path         : alt-g
 ```
 
 ## File Operation
 ```
-Yank             :    alt-y
-Cut              :    alt-x
-Paste            :    alt-p
-Delete           :    Delete
-Open with        :    alt-o
-reName           :    alt-n
-Mk new file/dir  :    alt-m
-Description      :    alt-d
+File Operation  / Yank              : alt-y
+File Operation  / Cut               : alt-x
+File Operation  / Paste             : alt-p
+File Operation  / Delete            : Delete
+File Operation  / Open with         : alt-o
+File Operation  / reName            : alt-n
+File Operation  / Mk new file/dir   : alt-m
+File Operation  / Description       : alt-d
 ```
 
-## Windows Jump
+## QuickAccess
 ```
-windows Jump     :    alt-w
-windows Explorer :    alt-e
+QuickAccess     / QuickAccess       : alt-q
+QuickAccess     / mk Favorite       : alt-f
+QuickAccess     / Delete            : Delete (when QA mode)
+```
+
+## Windows
+```
+Windows         / Windows Jump      : alt-w
+Windows         / Windows Explorer  : alt-e
 ```
 
 ## Magic
 ```
-Shell            :    alt-s
+Magic           / Shell             :    alt-s
 ```
