@@ -32,14 +32,22 @@ for var in $_fet_general_status_list
 do
   echo '0' >| ~/.fet/.status/.$var.status
 done
+local _fet_function_status_sed=()
+local _fet_function_status_path=()
 for var in $_fet_function_status_list
 do
+  _fet_function_status_path+=($(echo $var | sed 's:/:/zsh/:'))
   var=$(echo $var | sed 's:/:_:')
+  _fet_function_status_sed+=("$var")
   echo '0' >| ~/.fet/.status/.$var.status
 done
+local _fet_plugins_status_sed=()
+local _fet_plugins_status_path=()
 for var in $_fet_plugins_status_list
 do
+  _fet_plugins_status_path+=($(echo $var | sed 's:/:/zsh/:'))
   var=$(echo $var | sed 's:/:_:')
+  _fet_plugins_status_sed+=("$var")
   echo '0' >| ~/.fet/.status/.$var.status
 done
 echo >| ~/.fet/.status/.hidden.status
@@ -104,36 +112,30 @@ do
 
     local _fet_status_no_key='yes'
     ## Function status
-    for var in $_fet_function_status_list
+    for var in $(seq 1 $(echo ${#_fet_function_status_list[*]}))
     do
       if [ "$_fet_status_no_key" = "no" ]; then
         break
       fi
-      local var_sed=$(echo $var | sed 's:/:_:')
-      local var_path=$var
+      local var_sed=${_fet_function_status_sed[var]}
+      local var_path=${_fet_function_status_path[var]}
       local status_var=$(cat ~/.fet/.status/.$var_sed.status)
-      # local _fet_status_$var_sed=$(cat ~/.fet/.status/.$var_sed.status)
-      # local status_var=_fet_status_$var_sed
-      # status_var=$(eval echo \"\$$status_var\")
       if [ "$status_var" = '1' ]; then
         echo '0' >| ~/.fet/.status/.$var_sed.status
-        . ~/.fet/function/$var_path.zsh
+        . ~/.fet/$var_path.zsh
         _fet_status_no_key='no'
       fi
     done
 
     ## Plugins status
-    for var in $_fet_plugins_status_list
+    for var in $(seq 1 $(echo ${#_fet_plugins_status_list[*]}))
     do
       if [ "$_fet_status_no_key" = "no" ]; then
         break
       fi
-      local var_sed=$(echo $var | sed 's:/:_:')
-      local var_path=$(echo $var | sed 's:/:/functions/:')
+      local var_sed=${_fet_plugins_status_sed[var]}
+      local var_path=${_fet_plugins_status_path[var]}
       local status_var=$(cat ~/.fet/.status/.$var_sed.status)
-      # local _fet_status_$var_sed=$(cat ~/.fet/.status/.$var_sed.status)
-      # local status_var=_fet_status_$var_sed
-      # status_var=$(eval echo \"\$$status_var\")
       if [ "$status_var" = '1' ]; then
         echo '0' >| ~/.fet/.status/.$var_sed.status
         . ~/.fet/plugins/$var_path.zsh

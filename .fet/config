@@ -3,32 +3,32 @@ infobar:git_infobar/git_infobar
 
 # keybindings
 ## Basic
-bindkey:ctrl-c:functions/endloop
-bindkey:alt-c:functions/endloop
-bindkey:ESC:functions/endloop
-bindkey:backward-eof:functions/goup
-bindkey:alt-h:functions/goup
-bindkey:alt-j:functions/down
-bindkey:alt-k:functions/up
-bindkey:alt-l:functions/accept
-bindkey:left:functions/goup
-bindkey:down:functions/down
-bindkey:up:functions/up
-bindkey:right:functions/accept
-bindkey:alt-a:functions/hidden
+bindkey:ctrl-c:function/endloop
+bindkey:alt-c:function/endloop
+bindkey:ESC:function/endloop
+bindkey:backward-eof:function/goup
+bindkey:alt-h:function/goup
+bindkey:alt-j:function/down
+bindkey:alt-k:function/up
+bindkey:alt-l:function/accept
+bindkey:left:function/goup
+bindkey:down:function/down
+bindkey:up:function/up
+bindkey:right:function/accept
+bindkey:alt-a:function/hidden
 beautiful-preview:alt-b
 
 ## Preview
-bindkey:alt-i:functions/toggle-preview
-bindkey:ctrl-j:functions/preview-down
-bindkey:ctrl-k:functions/preview-up
+bindkey:alt-i:function/toggle-preview
+bindkey:ctrl-j:function/preview-down
+bindkey:ctrl-k:function/preview-up
 
 ## function
-bindkey:alt-u:functions/undocd
-bindkey:alt-r:functions/redocd
-bindkey:alt-g:functions/goto
-bindkey:alt-d:functions/description
-bindkey:alt-/:functions/help
+bindkey:alt-u:function/undocd
+bindkey:alt-r:function/redocd
+bindkey:alt-g:function/goto
+bindkey:alt-d:function/description
+bindkey:alt-/:function/help
 
 ## file_operation
 bindkey:DEL:file_operation/delete
