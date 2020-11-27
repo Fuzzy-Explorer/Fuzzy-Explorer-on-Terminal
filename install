@@ -1,0 +1,43 @@
+#!/bin/bash
+# fzf install
+if [ -n "$(which fzf)" ]; then
+  echo "Success: already installed 'fzf'"
+else
+  read -p "try to install 'fzf'. ok? (y/n) > ";
+  if [ "$REPLY" = "y" ]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install
+  else
+    echo "'fzf' is neeeded."
+  fi
+fi
+# lsi install
+if [ -n "$(which lsi)" ]; then
+  echo "Success: already installed 'ls-Improved'"
+else
+  if [ -n "$(which pip)" ]; then
+    read -p "try to install 'ls-Improved'. ok? (y/n) > ";
+    if [ "$REPLY" = "y" ]; then
+      pip install ls-Improved
+    else
+      echo "'ls-Improved' is neeeded."
+    fi
+  else
+    echo "Failure: try 'pip install ls-Improved', but not found pip"
+  fi
+fi
+# richcat install
+if [ -n "$(which richcat)" ]; then
+  echo "Success: already installed 'richcat'"
+else
+  if [ -n "$(which pip)" ]; then
+    read -p "try to install 'richcat'. ok? (y/n) > ";
+    if [ "$REPLY" = "y" ]; then
+      pip install richcat
+    else
+      echo "'richcat' is neeeded."
+    fi
+  else
+    echo "Failure: try 'pip install richcat', but not found pip"
+  fi
+fi
