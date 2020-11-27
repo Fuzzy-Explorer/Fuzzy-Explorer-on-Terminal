@@ -33,6 +33,7 @@ view Information :    alt-i
 ## File Operation
 ```
 Yank             :    alt-y
+Cut              :    alt-x
 Paste            :    alt-p
 Delete           :    Delete
 Open with        :    alt-o
