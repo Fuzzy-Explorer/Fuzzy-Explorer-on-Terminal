@@ -43,9 +43,9 @@ bindkey:alt-x:file_operation/cut
 bindkey:alt-s:magic/shell
 
 ## quickaccess
-bindkey:alt-q:quickaccess/quickaccess
-bindkey:alt-f:quickaccess/register_quickaccess
+# bindkey:alt-q:quickaccess/quickaccess
+# bindkey:alt-f:quickaccess/register_quickaccess
 
 ## windows
 bindkey:alt-e:windows_extension/windows_explorer
-bindkey:alt-w:windows_extension/windows_jump
+# bindkey:alt-w:windows_extension/windows_jump

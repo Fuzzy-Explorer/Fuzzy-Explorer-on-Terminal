@@ -53,7 +53,7 @@ done
 beautiful_preview=($(echo $config | grep "^beautiful-preview" | tr '\n' ' '))
 if [ -n "$beautiful_preview" ]; then
   config_key=$(echo $beautiful_preview | cut -f 2 -d ':')
-  _fet_var_keybindings=$_fet_var_keybindings,$config_key:'preview:echo {} | cut -f 2 -d '\'' '\'' | xargs -rI{a} sh -c '\''if [ -f {a} ]; then ls -ldhG {a}; echo; richcat {a} -w $(echo $(tput cols) \\* 0.37 | bc); else ls -ldhG {a}; echo; lsi {a}; fi'\'
+  _fet_var_keybindings=$_fet_var_keybindings,$config_key:'preview:echo {} | cut -f 2 -d '\'' '\'' | xargs -rI{a} sh -c '\''if [ -f {a} ]; then ls -ldhG {a}; echo; richcat {a} -w $(echo $(tput cols) \* 0.37 | bc); else ls -ldhG {a}; echo; lsi {a}; fi'\'
 fi
 
 ## infobar
@@ -73,8 +73,8 @@ else
   mkdir $HOME/.fet/user/data
 fi
 
-echo $_fet_function_status_list >| ~/.fet/user/build/function_status_list.fet
-echo $_fet_plugins_status_list >| ~/.fet/user/build/plugins_status_list.fet
+echo ${_fet_function_status_list[@]} >| ~/.fet/user/build/function_status_list.fet
+echo ${_fet_plugins_status_list[@]} >| ~/.fet/user/build/plugins_status_list.fet
 echo $_fet_var_keybindings >| ~/.fet/user/build/keybindings.fet
 
 echo "build successfully!"
