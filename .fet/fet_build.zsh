@@ -37,7 +37,7 @@ done
 
 IFS=$' '
 # config読み込み
-local config=$(cat ~/.fet/config)
+local config=$(cat ~/.fet/config-zsh)
 ## keybinding読み込み
 local _fet_var_keybindings='ESC:execute-silent(echo 1 >| ~/.fet/.status/.endloop.status)+abort'
 local config_bindkeys=($(echo $config | grep "^bindkey" | tr '\n' ' '))

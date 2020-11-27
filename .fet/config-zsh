@@ -1,0 +1,51 @@
+# fzf setting
+infobar:git_infobar/git_infobar
+
+# keybindings
+## Basic
+bindkey:ctrl-c:function/endloop
+bindkey:alt-c:function/endloop
+bindkey:ESC:function/endloop
+bindkey:backward-eof:function/goup
+bindkey:alt-h:function/goup
+bindkey:alt-j:function/down
+bindkey:alt-k:function/up
+bindkey:alt-l:function/accept
+bindkey:left:function/goup
+bindkey:down:function/down
+bindkey:up:function/up
+bindkey:right:function/accept
+bindkey:alt-a:function/hidden
+beautiful-preview:alt-b
+
+## Preview
+bindkey:alt-i:function/toggle-preview
+bindkey:ctrl-j:function/preview-down
+bindkey:ctrl-k:function/preview-up
+
+## function
+bindkey:alt-u:function/undocd
+bindkey:alt-r:function/redocd
+bindkey:alt-g:function/goto
+bindkey:alt-d:function/description
+bindkey:alt-/:function/help
+
+## file_operation
+bindkey:DEL:file_operation/delete
+bindkey:alt-m:file_operation/mknew
+bindkey:alt-o:file_operation/openwith
+bindkey:alt-p:file_operation/paste
+bindkey:alt-n:file_operation/rename
+bindkey:alt-y:file_operation/yank
+bindkey:alt-x:file_operation/cut
+
+## magic
+bindkey:alt-s:magic/shell
+
+## quickaccess
+bindkey:alt-q:quickaccess/quickaccess
+bindkey:alt-f:quickaccess/register_quickaccess
+
+## windows
+bindkey:alt-e:windows_extension/windows_explorer
+bindkey:alt-w:windows_extension/windows_jump

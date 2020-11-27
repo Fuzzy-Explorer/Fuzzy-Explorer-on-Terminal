@@ -38,15 +38,15 @@ done
 
 IFS=$' '
 # config読み込み
-config=$(cat ~/.fet/config)
+config=$(cat ~/.fet/config-bash)
 ## keybinding読み込み
 _fet_var_keybindings='ESC:execute-silent(echo 1 >| ~/.fet/.status/.endloop.status)+abort'
 config_bindkeys=($(echo $config | grep "^bindkey" | tr '\n' ' '))
-for config_bindkey in $config_bindkeys
+for config_bindkey in ${config_bindkeys[@]}
 do
   config_key=$(echo $config_bindkey | cut -f 2 -d ':')
   config_func=$(echo $config_bindkey | cut -f 3 -d ':')
-  config_func=$_fet_func_keybind_dict["$config_func"]
+  config_func=${_fet_func_keybind_dict["$config_func"]}
   _fet_var_keybindings=$_fet_var_keybindings,$config_key:$config_func
 done
 ## beautiful preview
