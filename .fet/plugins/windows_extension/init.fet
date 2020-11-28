@@ -1,0 +1,8 @@
+# settings
+shell:zsh
+shell:bash
+type:keybind
+
+# setfunc
+setfunc:windows_extension/windows_explorer:execute(echo 1 >| ~/.fet/.status/.windows_extension_windows_explorer.status)+abort
+setfunc:windows_extension/windows_jump:execute(echo 1 >| ~/.fet/.status/.windows_extension_windows_jump.status)+abort

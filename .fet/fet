@@ -1,0 +1,21 @@
+check_shell=$(readlink /proc/$$/exe | grep bash)
+
+_fet_colorcode_red='\033[1;31m'
+_fet_colorcode_green='\033[1;32m'
+_fet_colorcode_yellow='\033[1;33m'
+_fet_colorcode_end='\033[0m'
+
+if [ "$1" = "build" ]; then
+  if [ -n "$check_shell" ]; then
+    echo bash
+  else
+    . ~/.fet/fet_build.zsh
+  fi
+else
+  if [ -n "$check_shell" ]; then
+    ~/.fet/fet_main.bash
+  else
+    . ~/.fet/fet_main.zsh
+  fi
+  unset check_shell
+fi
