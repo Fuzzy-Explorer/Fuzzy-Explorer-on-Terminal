@@ -1,0 +1,7 @@
+# settings
+shell:zsh
+shell:bash
+type:keybind
+
+# setfunc
+setfunc:fzf_cd/fzf_cd:execute(echo 1 >| ~/.fet/.status/.fzf_cd_fzf_cd.status)+abort

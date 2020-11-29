@@ -1,0 +1,21 @@
+# settings
+shell:zsh
+shell:bash
+
+# setfunc
+setfunc:function/undocd:execute-silent(echo 1 >| ~/.fet/.status/.function_undocd.status)+abort
+setfunc:function/redocd:execute-silent(echo 1 >| ~/.fet/.status/.function_redocd.status)+abort
+setfunc:function/goto:execute(echo 1 >| ~/.fet/.status/.function_goto.status)+abort
+setfunc:function/description:execute(echo 1 >| ~/.fet/.status/.function_description.status)+accept
+setfunc:function/help:execute(echo 1 >| ~/.fet/.status/.function_help.status)+abort
+
+## no status function
+setfunc-nostatus:function/endloop:execute-silent(echo 1 >| ~/.fet/.status/.endloop.status)+abort
+setfunc-nostatus:function/down:down
+setfunc-nostatus:function/up:up
+setfunc-nostatus:function/accept:accept
+setfunc-nostatus:function/preview-up:preview-up
+setfunc-nostatus:function/preview-down:preview-down
+setfunc-nostatus:function/goup:execute-silent(echo 1 >| ~/.fet/.status/.goup.status)+abort
+setfunc-nostatus:function/hidden:execute(echo >> ~/.fet/.status/.hidden.status)+abort
+setfunc-nostatus:function/toggle-preview:toggle-preview
