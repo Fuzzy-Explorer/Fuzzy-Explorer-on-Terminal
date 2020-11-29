@@ -1,0 +1,7 @@
+# settings
+shell:zsh
+shell:bash
+type:keybind
+
+# setfunc
+setfunc:vim_recent/vim_recent:execute(echo 1 >| ~/.fet/.status/.vim_recent_vim_recent.status)+abort

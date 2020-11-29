@@ -41,6 +41,8 @@ bindkey:alt-x:file_operation/cut
 
 ## magic
 bindkey:alt-s:magic/shell
+bindkey:alt-v:vim_recent/vim_recent
+bindkey:alt-t:fzf_cd/fzf_cd
 
 ## quickaccess
 bindkey:alt-q:quickaccess/quickaccess
