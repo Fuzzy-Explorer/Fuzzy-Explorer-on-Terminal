@@ -1,4 +1,4 @@
-# Fuzzy-Terminal-Explorer
+# Fuzzy-Explorer-on-Terminal
 Powerful CUI Explorer. Version.0.1.0-beta
 
 ## What is this
