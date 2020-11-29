@@ -8,7 +8,7 @@ Powerful CUI Explorer. Version.0.1.0-alpha
 Install command:
 ```bash
 git clone git@github.com:Fuzzy-Explorer/Fuzzy-Explorer-on-Terminal.git ~/.fet
-~/.fet/install
+. ~/.fet/install
 ```
 And, you can use Fuzzy-Explorer-on-Terminal with `. ~/.fet/fet`.  
 Setting `alias fet='. $HOME/.fet/fet'` is recommended.  
