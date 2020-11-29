@@ -1,1 +1,2 @@
-.wsl_explorer/.status/*.status
+.status/*.status
+user/data/

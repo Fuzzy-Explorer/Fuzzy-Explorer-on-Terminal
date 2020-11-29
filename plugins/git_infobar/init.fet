@@ -1,0 +1,7 @@
+# settings
+shell:zsh
+shell:bash
+type:infobar
+
+# infobar
+setinfobar:git_infobar/git_infobar

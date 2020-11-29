@@ -1,0 +1,7 @@
+# settings
+shell:zsh
+shell:bash
+type:keybind
+
+# setfunc
+setfunc:magic/shell:execute-silent(echo 1 >| ~/.fet/.status/.magic_shell.status)+abort
