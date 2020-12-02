@@ -68,9 +68,11 @@ do
 
   # ディレクトリ一覧の取得
   if [ $_fet_status_hidden -eq 1 ]; then
-    local _fet_path_path_list="../\n`lsi`"
+    # local _fet_path_path_list="../\n`lsi`"
+    local _fet_path_path_list="`lsi`"
   else;
-    local _fet_path_path_list="../\n`lsi -a`"
+    # local _fet_path_path_list="../\n`lsi -a`"
+    local _fet_path_path_list="`lsi -a`"
   fi
 
   # プロンプト文字列
