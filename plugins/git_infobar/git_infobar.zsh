@@ -22,7 +22,7 @@ if [ -n "$_fet_var_is_git_dir" ]; then
       _fet_var_git_status=$_fet_var_git_status"$_fet_colorcode_red"?"$_fet_var_git_diff_untrack""$_fet_colorcode_end"
     fi
   fi
-  _fet_var_git_current_branch=$(echo '\uf1d3'  $_fet_var_git_current_branch $_fet_var_git_status)
+  _fet_var_git_current_branch=$(echo '\uf1d3 \uf126'  $_fet_var_git_current_branch $_fet_var_git_status)
 else
   _fet_var_git_current_branch=''
 fi
