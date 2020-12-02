@@ -69,14 +69,16 @@ do
   # ディレクトリ一覧の取得
   if [ $_fet_status_hidden -eq 1 ]; then
     # local _fet_path_path_list="../\n`lsi`"
-    local _fet_path_path_list="`lsi`"
+    local _fet_path_path_list="`lsi ././`"
   else;
     # local _fet_path_path_list="../\n`lsi -a`"
-    local _fet_path_path_list="`lsi -a`"
+    local _fet_path_path_list="`lsi ././ -a`"
   fi
+  _fet_pwd=$(echo $_fet_path_path_list | awk "NR==1 {print}")
+  _fet_path_path_list=$(echo $_fet_path_path_list | awk "NR>1 {print}")
 
   # プロンプト文字列
-  local _fet_var_promp=$(echo $PWD | sed -e "s:$HOME:~:")
+  local _fet_var_promp=$(echo $_fet_pwd | sed -e "s:$HOME:~:")
 
   # infobar
   local _fet_var_infobar=''
@@ -86,9 +88,10 @@ do
       _fet_var_infobar=$(echo $_fet_var_infobar$(. ~/.fet/plugins/$(echo $infobar_func).zsh)'  ')
     fi
   done
-
+  _fet_var_infobar=$(echo "$_fet_var_infobar\n$_fet_var_promp")
+  
   # fzfでのディレクトリの選択
-  local _fet_path_selected_path=$(echo $_fet_path_path_list | fzf +m --ansi --height 70% --cycle --preview-window right:40% --info='inline' --layout=reverse --border --prompt="$_fet_var_promp >" --header="$_fet_var_infobar" --bind "$_fet_var_keybindings" --preview="echo {} | cut -f 2 -d ' ' | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then ls -ldhG {a}; if [ \"$(which batcat)\" = \"batcat not found\" ]; then cat {a}; else batcat {a} --color=always --style=grid --line-range :100; fi else ls -ldhG {a}; echo; lsi {a}; fi'")
+  local _fet_path_selected_path=$(echo $_fet_path_path_list | fzf +m --ansi --height 70% --cycle --preview-window right:40% --info='inline' --layout=reverse --border --prompt="  Search Path >" --header="$_fet_var_infobar" --bind "$_fet_var_keybindings" --preview="echo {} | cut -f 2 -d ' ' | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then ls -ldhG {a}; if [ \"$(which batcat)\" = \"batcat not found\" ]; then cat {a}; else batcat {a} --color=always --style=grid --line-range :100; fi else ls -ldhG {a}; echo; lsi {a}; fi'")
   _fet_status_endloop=$(cat ~/.fet/.status/.endloop.status)
   # 動作の分岐
   if [ $_fet_status_endloop = '0' ]; then
