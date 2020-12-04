@@ -31,7 +31,7 @@ do
     echo "$_fet_colorcode_yellow""Do you want to delete quickaccess""$_fet_colorcode_end""='$_fet_quickaccess_name'?$_fet_colorcode_end ($_fet_colorcode_green"'y'"$_fet_colorcode_end"'/'"$_fet_colorcode_red"'n'"$_fet_colorcode_end"')'
     read -r;
     if [ "$REPLY" = "y" ]; then
-      . ~/.fet/plugins/quickaccess/functions/delete_quickaccess.zsh
+      . ~/.fet/plugins/quickaccess/zsh/delete_quickaccess.zsh
     else
       echo '0' >| ~/.fet/.status/.quickaccess_delete_quickaccess.status
     fi
@@ -48,7 +48,7 @@ do
         echo "$_fet_colorcode_yellow""Do you want to delete quickaccess""$_fet_colorcode_end""='$_fet_quickaccess_name'?$_fet_colorcode_end ($_fet_colorcode_green"'y'"$_fet_colorcode_end"'/'"$_fet_colorcode_red"'n'"$_fet_colorcode_end"')'
         read -r;
         if [ "$REPLY" = "y" ]; then
-          . ~/.fet/plugins/quickaccess/functions/delete_quickaccess.zsh
+          . ~/.fet/plugins/quickaccess/zsh/delete_quickaccess.zsh
         else
           echo '0' >| ~/.fet/.status/.quickaccess_delete_quickaccess.status
         fi
