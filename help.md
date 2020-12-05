@@ -1,4 +1,4 @@
-# fe - Fuzzy Terminal Explorer (v0.1.2-beta)
+# fe - Fuzzy Terminal Explorer (v0.1.3-beta)
 
 ## General
 ```
