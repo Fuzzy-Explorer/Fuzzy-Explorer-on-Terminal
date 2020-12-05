@@ -1,5 +1,5 @@
 # Fuzzy-Explorer-on-Terminal
-Powerful CUI Explorer. Version.0.1.2-beta
+Powerful CUI Explorer. Version.0.1.3-beta
 
 ## What is this
 ![result](https://github.com/ShotaroKataoka/Fuzzy-Terminal-Explorer/blob/media/test.gif)
