@@ -25,6 +25,10 @@ If you want to use beautiful-preview function, please install [richcat](https://
 pip install richcat
 ```
 
+# Related projects
+## Plugins
+- [yamamoto-yuta/dir_history](https://github.com/yamamoto-yuta/fet_dir_history)
+
 # Contributors!
 - [@ShotaroKataoka](https://github.com/ShotaroKataoka) (Maintainer, main contributor)
 - [@yamamoto-yuta](https://github.com/yamamoto-yuta) (Contributor)
