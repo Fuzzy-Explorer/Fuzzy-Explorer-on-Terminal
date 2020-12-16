@@ -28,6 +28,7 @@ pip install richcat
 # Related projects
 ## Plugins
 - [yamamoto-yuta/dir_history](https://github.com/yamamoto-yuta/fet_dir_history)
+- [yamamoto-yuta/fet_resporn](https://github.com/yamamoto-yuta/fet_respawn)
 
 # Contributors!
 - [@ShotaroKataoka](https://github.com/ShotaroKataoka) (Maintainer, main contributor)
